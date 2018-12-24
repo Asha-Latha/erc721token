@@ -7,7 +7,7 @@ function require(condition, error) {
 
 let array=[];
 var c=0;
-modules.exports={
+module.exports={
 
     balanceOf:async function(owner){
         console.log("This senderId: " + this.trs.senderID);
