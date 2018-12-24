@@ -1,21 +1,21 @@
 module.exports = async function () {
   console.log('enter dapp init')
+ 
+app.registerContract(2000,'erc721.balanceOf')
+app.registerContract(2001,'erc721.mint')
+app.registerContract(2002,'erc721.transferFrom')
+app.registerContract(2003,'erc721.transfer')
+app.registerContract(2004,'erc721.approve')
+app.registerContract(2005,'erc721.allowance')
+app.registerContract(2006,'erc721.burn')
 
-app.registerContract(1,'balanceOf')
-app.registerContract(2,'mint')
-app.registerContract(3,'transferFrom')
-app.registerContract(4,'transfer')
-app.registerContract(5,'approve')
-app.registerContract(6,'allowance')
-app.registerContract(7,'burn')
-
-app.registerFee(1,'0','BEL')
-app.registerFee(2,'0','BEL')
-app.registerFee(3,'0','BEL')
-app.registerFee(4,'0','BEL')
-app.registerFee(5,'0','BEL')
-app.registerFee(6,'0','BEL')
-app.registerFee(7,'0','BEL')
+app.registerFee(2000,'0','BEL')
+app.registerFee(2001,'0','BEL')
+app.registerFee(2002,'0','BEL')
+app.registerFee(2003,'0','BEL')
+app.registerFee(2004,'0','BEL')
+app.registerFee(2005,'0','BEL')
+app.registerFee(2006,'0','BEL')
 
 
 
