@@ -35,7 +35,7 @@ mint:async function(owner){
    // return true;
  },
 
- transferFrom:async function(fromaddr, toaddr, tokenId){
+ transferFrom:async function(tokenName,tokenId,fromaddr, toaddr){
     function require(condition, error) {
         if (!condition) throw Error(error)
       }
