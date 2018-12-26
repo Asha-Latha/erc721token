@@ -49,7 +49,7 @@ mint:async function(owner){
 },
 
 approve:async function(spender, tID){
-     function allowance(owner, spender){
+     function allowance1(owner, spender){
         let row = await app.model.Approve.findOne({
             owner: owner,
             spender: spender
@@ -59,7 +59,7 @@ approve:async function(spender, tID){
       }
   let row = await app.model.Balances.findOne({address: spender});
   if(!row) return "Spender address not found";
-  row = this.allowance(this.trs.senderID, spender);
+  row = this.allowance1(this.trs.senderID, spender);
   if(row === "The approval record is not found"){
       app.sdb.create("Approve", {
           owner: this.trs.senderID,
