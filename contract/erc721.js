@@ -24,12 +24,12 @@ module.exports={
 },
 
 mint:async function(owner){
-    const id='Tokens_max_tokenId';
+    
     let x = await app.balances.get(owner);
     if(!x) return "To address does not exist";
     //app.sdb.update("Token", {}, {tokenName=owner},{tokenId=this.tokenId+tId});
     //tId=tokens[0];
-    app.sdb.create("Token", {tokenName:owner,tokenId:app.autoId.increment(id)===1,mintBy:owner,mintAt:this.mintAt.now()});
+    app.sdb.create("Token", {tokenName:owner,tokenId:app.autoId.increment(Tokens_max_tokenId),mintBy:owner,mintAt:this.mintAt.now()});
     //array.push(owner);
  },
 
