@@ -49,8 +49,8 @@ mint:async function(owner){
 },
 
 approve:async function(spender, tID){
-     function allowance1(owner, spender){
-        let row = await app.model.Approve.findOne({
+ function allowance1(owner, spender){
+        let row = app.model.Approve.findOne({
             owner: owner,
             spender: spender
         });
