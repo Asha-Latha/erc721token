@@ -10,7 +10,8 @@ module.exports = {
             name: 'tokenId',
             type: 'String',
             length: 255,
-            primary_key:true,
+            not_null: true,
+            primary_key:true
         },
         {
             name: 'mintBy',
