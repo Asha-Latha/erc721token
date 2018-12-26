@@ -49,6 +49,14 @@ mint:async function(owner){
 },
 
 approve:async function(spender, tID){
+     function allowance(owner, spender){
+        let row = await app.model.Approve.findOne({
+            owner: owner,
+            spender: spender
+        });
+        if(!row) return 0;
+        return row.tId;
+      }
   let row = await app.model.Balances.findOne({address: spender});
   if(!row) return "Spender address not found";
   row = this.allowance(this.trs.senderID, spender);
@@ -61,7 +69,7 @@ approve:async function(spender, tID){
   }else{
       app.sdb.update("Approve",{owner: this.trs.senderID, spender: spender}, {tId: tId});
   }
-  return true;
+  //return true;
 },
 
 
