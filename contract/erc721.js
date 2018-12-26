@@ -32,6 +32,7 @@ mint:async function(owner){
    // app.sdb.create("Token", {tokenName:owner,tokenId:app.autoId.increment(Tokens_max_tokenId),mintBy:owner,mintAt:this.mintAt.now()});
    app.sdb.create("Token", {tokenName:owner,tokenId:x++,mintBy:owner,mintAt:this.mintAt.now()});
     //array.push(owner);
+    return true;
  },
 
  transferFrom:async function(fromaddr, toaddr, tokenId){
