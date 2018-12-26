@@ -32,7 +32,7 @@ mint:async function(owner){
    // app.sdb.create("Token", {tokenName:owner,tokenId:app.autoId.increment(Tokens_max_tokenId),mintBy:owner,mintAt:this.mintAt.now()});
    app.sdb.create("Token", {tokenName:owner,tokenId:c++,mintBy:owner,mintAt:new Date().getTime()});
     //array.push(owner);
-    return true;
+   // return true;
  },
 
  transferFrom:async function(fromaddr, toaddr, tokenId){
