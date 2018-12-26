@@ -36,9 +36,12 @@ mint:async function(owner){
  },
 
  transferFrom:async function(fromaddr, toaddr, tokenId){
+    function require(condition, error) {
+        if (!condition) throw Error(error)
+      }
     require(tokenId !== undefined, 'Token does not exist')
     app.balances.transfer(tokenName, tokenId, fromaddr, toaddr);
-    return true;
+    //return true;
   },
 
   transfer:async function(address, tId){
