@@ -97,7 +97,7 @@ burn:async function(tId,owner){
     });
     require(row !== undefined, 'Token does not exist')
     app.sdb.del('Token', { id: this.tId });
-    return true;
+    //return true;
 }
 
 }
