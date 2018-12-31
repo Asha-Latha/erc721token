@@ -64,16 +64,17 @@ approve:async function(spender, tID){
   let row = await app.model.Balances.findOne({address: spender});
   if(!row) return "Spender address not found";
   row = this.allowance1(this.trs.senderID, spender);
-  if(row === "The approval record is not found"){
+  if(row){
       app.sdb.create("Approve", {
           owner: this.trs.senderID,
           spender: spender,
           tId:tId
       });
-  }else{
-      app.sdb.update("Approve",{owner: this.trs.senderID, spender: spender}, {tId: tId});
-  }
+//   }else{
+//       app.sdb.create("Approve",{owner: this.trs.senderID, spender: spender}, {tId: tId});
+//   }
   //return true;
+}
 },
 
 
