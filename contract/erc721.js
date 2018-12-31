@@ -87,12 +87,15 @@ allowance:async function(owner, spender){
 },
 
 burn:async function(tId,owner){
+    function require(condition, error) {
+        if (!condition) throw Error(error)
+      }
     require(tId !== undefined, 'Token does not exist')
     let row = await app.model.Token.findOne({
         tokenId: tId,
         mintBy: owner
     });
-    if(!row) "Cant burn tokens";
+    require(row !== undefined, 'Token does not exist')
     app.sdb.del('Token', { id: this.tId });
     return true;
 }
