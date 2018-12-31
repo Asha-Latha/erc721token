@@ -49,13 +49,17 @@ mint:async function(owner){
 },
 
 approve:async function(spender, tID){
+    function require(condition, error) {
+        if (!condition) throw Error(error)
+      }
  function allowance1(owner, spender){
         let row = app.model.Approve.findOne({
             owner: owner,
             spender: spender
         });
-        if(!row) return 0;
-        return row.tId;
+        // if(!row) return 0;
+        // return row.tId;
+        require(row !== undefined, 'Token does not exist')
       }
   let row = await app.model.Balances.findOne({address: spender});
   if(!row) return "Spender address not found";
