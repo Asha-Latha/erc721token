@@ -59,11 +59,11 @@ approve:async function(spender, tID){
           spender: spender,
           tId:tId
       });
-//   }else{
-//       app.sdb.create("Approve",{owner: this.trs.senderID, spender: spender}, {tId: tId});
-//   }
+  }else{
+      app.sdb.update("Approve",{owner: this.trs.senderID, spender: spender}, {tId: tId});
+  }
   //return true;
-}
+
 function require(condition, error) {
     if (!condition) throw Error(error)
   }
