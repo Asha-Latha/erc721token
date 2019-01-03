@@ -9,19 +9,19 @@ let array=[];
 var c=0;
 module.exports={
 
-    balanceOf:async function(owner){
-        console.log("This senderId: " + this.trs.senderID);
-    var c=0;
-    let row = app.balances.get(owner);
-    if(!row) return "Owner not found";
-    for(var i=0;i<array.length;i++)
-    {
-      if(array[i]==owner){
-        c++;
-   }
- }
-    return c;
-},
+//     balanceOf:async function(owner){
+//         console.log("This senderId: " + this.trs.senderID);
+//     var c=0;
+//     let row = app.balances.get(owner);
+//     if(!row) return "Owner not found";
+//     for(var i=0;i<array.length;i++)
+//     {
+//       if(array[i]==owner){
+//         c++;
+//    }
+//  }
+//     return c;
+// },
 
 mint:async function(owner){
     var c=0;
@@ -35,7 +35,16 @@ mint:async function(owner){
    // return true;
  },
 
- transferFrom:async function(tokenName,tokenId,fromaddr, toaddr){
+fields:async function(dict){
+    for (var i in dict) {
+            if (dict.hasOwnProperty(i)) {   
+            //console.log(i, dict[i]);
+            await app.sdb.load('Token', ['i', 'dict[i]'], ['i']);     
+        }
+    }
+},
+ 
+transferFrom:async function(tokenName,tokenId,fromaddr, toaddr){
     function require(condition, error) {
         if (!condition) throw Error(error)
       }
