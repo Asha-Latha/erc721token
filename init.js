@@ -8,6 +8,8 @@ app.registerContract(2003,'erc721.transfer')
 app.registerContract(2004,'erc721.approve')
 app.registerContract(2005,'erc721.allowance')
 app.registerContract(2006,'erc721.burn')
+app.registerContract(2007,'erc721.fields')
+
 
 app.registerFee(2000,'0','BEL')
 app.registerFee(2001,'0','BEL')
@@ -16,6 +18,7 @@ app.registerFee(2003,'0','BEL')
 app.registerFee(2004,'0','BEL')
 app.registerFee(2005,'0','BEL')
 app.registerFee(2006,'0','BEL')
+app.registerFee(2007,'0','BEL')
 
 
 
