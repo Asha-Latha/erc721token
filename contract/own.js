@@ -16,13 +16,26 @@ module.exports = {
     
     transferFrom: async function(fromaddr, toaddr, amount){
         function require(condition, error) {
-            if (!condition) throw Error(error)
+            if (condition) throw Error(error)
           }
         var Currency = 'IXO';
        // let frombal = app.balances.get(fromaddr, 'IXO');
-        let frombal = app.sdb.get('Bal', { address: fromaddr, currency: Currency });
+       // let frombal = app.sdb.get('Bal', { address: fromaddr, currency: Currency });
+        let option = {
+        condition: {
+          address: fromaddr,
+          currency: Currency
+         }
+       }
+        let frombal= app.model.Bal.findOne(option);
         require(frombal !== undefined, 'Sender address not found')
-        let tobal =  app.sdb.get('Bal', { address: toaddr, currency: Currency })
+        let option1 = {
+            condition: {
+              address: toaddr,
+              currency: Currency
+             }
+           }
+        let tobal =  app.model.Bal.findOne(option1);
         require(tobal !== undefined, 'Receiver address not found')
         require(frombal < amount, 'Insufficient balance in senders address')
         //app.sdb.update("Balances", {balance:frombal}, {address: fromaddr});

@@ -13,10 +13,11 @@ app.route.post('/user/bal1', async function (req, cb) {
         owner: req.query.owner,
     };
     let cond={
-        Token: {
            mintAt: owner
-        } 
     }
-    var response = await app.model.Block.count(cond);
+    var response = await app.model.Token.count(cond);
     return response;
 });
+
+
+
