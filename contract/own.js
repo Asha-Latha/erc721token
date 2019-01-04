@@ -44,7 +44,7 @@ module.exports = {
         }
         
         function allowance1(owner, spender){
-            let row = await app.model.Approve.findOne({
+            let row = app.model.Approve.findOne({
                 owner: owner,
                 spender: spender
             });
