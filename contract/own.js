@@ -12,9 +12,9 @@ module.exports = {
     transferFrom: async function(fromaddr, toaddr, amount){
         var CURRENCY = 'IXO';
         let frombal = app.balances.get(fromaddr, 'IXO');
-        if(frombal === "Address not found") return "Sender address not found";
+        if(!frombal) return "Sender address not found";
         let tobal = app.balances.get(toaddr, 'IXO');
-        if(tobal === "Address not found") return "Receiver address not found";
+        if(!tobal) return "Receiver address not found";
         if(frombal < amount) return "Insufficient balance in sender's address";
         //app.sdb.update("Balances", {balance:frombal}, {address: fromaddr});
         //app.sdb.update("Balances", {balance:tobal}, {address: toaddr});
