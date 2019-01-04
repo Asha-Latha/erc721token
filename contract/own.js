@@ -117,7 +117,7 @@ module.exports = {
                     precision: 8,
                     dappOwner:this.trs.senderID
                 });
-                //return secret;
+                return secret;
             }else{
                 return "Address already issued";
             }
