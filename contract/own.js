@@ -54,7 +54,7 @@ module.exports = {
                                                                         // with /transactions/unsigned type: 1000 
                                                                         // Will change it if that's not how it works.
     approve: async function(spender, amount){
-        let row = await app.model.Balances.findOne({address: spender});
+        let row = await app.model.Bal.findOne({address: spender});
         if(!row) return "Spender address not found";
         row = this.allowance1(this.trs.senderID, spender);
         if(row){
