@@ -23,19 +23,19 @@ module.exports = {
        // let frombal = app.sdb.get('Bal', { address: fromaddr, currency: Currency });
         let option = {
         condition: {
-          address: fromaddr,
+          Address: fromaddr,
           currency: Currency
          },
-         fields: Balance
+         fields: 'Balance'
        }
         let frombal= app.model.Bal.findOne(option);
         require(frombal !== undefined, 'Sender address not found')
         let option1 = {
             condition: {
-              address: toaddr,
+              Address: toaddr,
               currency: Currency
              },
-             fields: Balance
+             fields: 'Balance'
            }
         let tobal =  app.model.Bal.findOne(option1);
         require(tobal !== undefined, 'Receiver address not found')
