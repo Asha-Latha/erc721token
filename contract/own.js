@@ -18,8 +18,8 @@ module.exports = {
         require(frombal !== undefined, 'Sender address not found')
         let tobal = app.balances.get(toaddr, 'IXO');
         require(tobal !== undefined, 'Receiver address not found')
-        if(frombal < amount) return "Insufficient balance in sender's address";
-        //app.sdb.update("Balances", {balance:frombal}, {address: fromaddr});
+        require(frombal < amount, 'Insufficient balance in senders address')
+                //app.sdb.update("Balances", {balance:frombal}, {address: fromaddr});
         //app.sdb.update("Balances", {balance:tobal}, {address: toaddr});
         app.balances.transfer(CURRENCY, amount, fromaddr, toaddr);
         //return true;
