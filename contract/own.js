@@ -36,7 +36,7 @@ module.exports = {
         let row = await app.model.Balances.findOne({address: spender});
         if(!row) return "Spender address not found";
         row = this.allowance1(this.trs.senderID, spender);
-        if(!row){
+        if(row){
             app.sdb.create("Approve", {
                 owner: this.trs.senderID,
                 spender: spender,
