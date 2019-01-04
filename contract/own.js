@@ -94,7 +94,7 @@ module.exports = {
     // },
 
 
-    generateOneTimeDappAddress: function(){
+    generateOneTimeDappAddress: function(superAdmin){
         //var AschJS = require('asch-js');
         //this function is designed in such a way where it can be executed absolutely once.
 
@@ -121,7 +121,7 @@ module.exports = {
             }else{
                 return "Address already issued";
             }
-
+   
         };
     }(),  //---> Called this function and it returns the return function which will be stored in generateOneTimeDappAddress
     // If using closures to achieve a singleton function doesn't work in blockchain sense, 
