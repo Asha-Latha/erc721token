@@ -84,33 +84,33 @@ module.exports = {
     // },
 
 
-    // generateOneTimeDappAddress: function(){
-    //     //this function is designed in such a way where it can be executed absolutely once.
+    generateOneTimeDappAddress: function(){
+        //this function is designed in such a way where it can be executed absolutely once.
 
-    //     var executed = false;              // ---> The closure variable
-    //     return async function() {          // ---> The function that will actually be stored in generateOneTimeDappAddress
-    //         if (!executed) {
-    //             executed = true;
+        var executed = false;              // ---> The closure variable
+        return async function() {          // ---> The function that will actually be stored in generateOneTimeDappAddress
+            if (!executed) {
+                executed = true;
 
-    //             var secret = Math.random().toString(36).substring(7);
-    //             var keys = AschJS.crypto.getKeys(secret);
-    //             app.sdb.create("Token",{
-    //                 totalSupply: balanceOf(this.trs.senderID),
-    //                 currency: "IXO",
-    //                 tokenExchangeRate: "0.1",
-    //                 dappAddress: AschJS.crypto.getAddress(keys.publicKey),
-    //                 dappPubKey: keys.publicKey(),
-    //                 shortName: "ixo",
-    //                 precision: 8,
-    //                 dappOwner:this.trs.senderID
-    //             });
-    //             return secret;
-    //         }else{
-    //             return "Address already issued";
-    //         }
+                var secret = Math.random().toString(36).substring(7);
+                var keys = AschJS.crypto.getKeys(secret);
+                app.sdb.create("Token",{
+                    totalSupply: balanceOf(this.trs.senderID),
+                    currency: "IXO",
+                    tokenExchangeRate: "0.1",
+                    dappAddress: AschJS.crypto.getAddress(keys.publicKey),
+                    dappPubKey: keys.publicKey(),
+                    shortName: "ixo",
+                    precision: 8,
+                    dappOwner:this.trs.senderID
+                });
+                //return secret;
+            }else{
+                return "Address already issued";
+            }
 
-    //     };
-    // }(),  //---> Called this function and it returns the return function which will be stored in generateOneTimeDappAddress
+        };
+    }(),  //---> Called this function and it returns the return function which will be stored in generateOneTimeDappAddress
     // If using closures to achieve a singleton function doesn't work in blockchain sense, 
     // then the alternate idea is to write this function in init.js
     // assuming that init.js runs only one time when the Dapp is launched.
