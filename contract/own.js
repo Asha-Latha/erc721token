@@ -25,7 +25,8 @@ module.exports = {
         condition: {
           address: fromaddr,
           currency: Currency
-         }
+         },
+         fields: Balance
        }
         let frombal= app.model.Bal.findOne(option);
         require(frombal !== undefined, 'Sender address not found')
@@ -33,7 +34,8 @@ module.exports = {
             condition: {
               address: toaddr,
               currency: Currency
-             }
+             },
+             fields: Balance
            }
         let tobal =  app.model.Bal.findOne(option1);
         require(tobal !== undefined, 'Receiver address not found')
