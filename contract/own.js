@@ -57,10 +57,10 @@ module.exports = {
         function require(condition, error) {
             if (!condition) throw Error(error)
           }
-        let row = await app.model.Bal.findOne({address: spender});
+        var row = await app.model.Bal.findOne({Address: spender});
         require(row !== undefined, 'Spender address not found')
-        row = this.allowance1(this.trs.senderID, spender);
-        if(row){
+        row = allowance1(this.trs.senderID, spender);
+        if(!row){
             app.sdb.create("Approve", {
                 owner: this.trs.senderID,
                 spender: spender,
@@ -70,11 +70,7 @@ module.exports = {
             app.sdb.update("Approve",{owner: this.trs.senderID, spender: spender}, {amount: amount});
         }
         
-        function require(condition, error) {
-            if (!condition) throw Error(error)
-          }
         function allowance1(owner, spender){
-            let row = app.model.Approve.findOne(option2);
             let option2 = {
                 condition: {
                   owner:owner,
@@ -82,6 +78,8 @@ module.exports = {
                  },
                  fields: ['amount']
                }
+            var  row = app.model.Approve.findOne(option2);
+            
             
 
             //if(!row) return 0;
