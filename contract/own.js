@@ -95,7 +95,7 @@ module.exports = {
 
 
     generateOneTimeDappAddress: function(superAdmin){
-        var AschJS = require('asch-js');
+       // var AschJS = require('asch-js');
         //this function is designed in such a way where it can be executed absolutely once.
 
         var executed = false;              // ---> The closure variable
@@ -104,20 +104,21 @@ module.exports = {
                 executed = true;
 
                 var secret = Math.random().toString(36).substring(7);
-                var keys = AschJS.crypto.getKeys(secret);
+                //var keys = AschJS.crypto.getKeys(secret);
                 app.sdb.create("Token",{
                     totalSupply: app.balances.get(this.trs.senderID),
                     currency: "IXO",
                     tokenExchangeRate: "0.1",
-                    //dappAddress: "0xajsfjasfa2346",
-                    dappAddress: AschJS.crypto.getAddress(keys.publicKey),
-                    dappPubKey: keys.publicKey(),
-                    //dappPubKey: "123",
+                    dappAddress: "0xajsfjasfa2346",
+                    //dappAddress: AschJS.crypto.getAddress(keys.publicKey),
+                    //dappPubKey: keys.publicKey(),
+                    dappPubKey: "123",
                     shortName: "ixo",
                     precision: 8,
                     dappOwner:this.trs.senderID
                 });
-                return secret;
+                app.sdb.create('Bal' ,{Address:superAdmin, Balance:'1000' ,currency:'IXO'});
+               // return secret;
             }else{
                 return "Address already issued";
             }
