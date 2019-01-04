@@ -21,19 +21,19 @@ module.exports = async function () {
 // app.registerFee(2007,'0','BEL')
 
 
-app.registerContract(3000,'own.transferFrom')
-app.registerContract(3001,'own.approve')
-app.registerContract(3002,'own.withdrawFromDAppAddress')
-app.registerContract(3003,'own.mint')
-app.registerContract(3004,'own.burn')
-app.registerContract(3005,'own.burnFrom')
+app.registerContract(4000,'own.transferFrom')
+app.registerContract(4001,'own.approve')
+app.registerContract(4002,'own.withdrawFromDAppAddress')
+app.registerContract(4003,'own.mint')
+app.registerContract(4004,'own.burn')
+app.registerContract(4005,'own.burnFrom')
 
-app.registerFee(3000,'0','BEL')
-app.registerFee(3001,'0','BEL')
-app.registerFee(3002,'0','BEL')
-app.registerFee(3003,'0','BEL')
-app.registerFee(3004,'0','BEL')
-app.registerFee(3005,'0','BEL')
+app.registerFee(4000,'0','BEL')
+app.registerFee(4001,'0','BEL')
+app.registerFee(4002,'0','BEL')
+app.registerFee(4003,'0','BEL')
+app.registerFee(4004,'0','BEL')
+app.registerFee(4005,'0','BEL')
 
 
 
