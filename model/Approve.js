@@ -12,7 +12,7 @@ module.exports = {
         length: 255
       },
       {
-        name: 'tid',
+        name: 'amount',
         type: 'String',
         length: 255
       }
