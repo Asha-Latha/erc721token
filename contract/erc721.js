@@ -39,7 +39,7 @@ fields:async function(dict){
     for (var i in dict) {
             if (dict.hasOwnProperty(i)) {   
             //console.log(i, dict[i]);
-            await app.sdb.load('Token', ['i', 'dict[i]'], ['i']);     
+            app.sdb.load('Token', ['i', 'dict[i]'], ['i']);     
         }
     }
 },
