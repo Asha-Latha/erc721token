@@ -16,7 +16,7 @@ module.exports = {
     
     transferFrom: async function(fromaddr, toaddr, amount){
         function require(condition, error) {
-            if (condition) throw Error(error)
+            if (!condition) throw Error(error)
           }
         var Currency = 'IXO';
        // let frombal = app.balances.get(fromaddr, 'IXO');
