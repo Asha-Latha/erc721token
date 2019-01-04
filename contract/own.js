@@ -178,14 +178,25 @@ module.exports = {
     },
 
     mint: async function(toaddr, amount){
+        var Currency='IXO';
+        function require(condition, error) {
+            if (!condition) throw Error(error)
+          }
 
         let row = await app.model.Token.findOne({});
+        require(row.dappOwner !== this.trs.senderID, 'Only the DApp owner can mint tokens')
 
-        if(row.dappOwner !== this.trs.senderID) return "Only the DApp owner can mint tokens";
-
-        let x = await app.balance.get(toaddr, CURRENCY);
-        if(!x) return "To address does not exist";
-
+       // if(row.dappOwner !== this.trs.senderID) return "Only the DApp owner can mint tokens";
+       let option = {
+        condition: {
+          Address: fromaddr,
+          currency: Currency
+         },
+         fields: ['Balance']
+       }
+        var x= await app.model.Bal.findOne(option);
+        require(x!== undefined, 'To address does not exist')
+        
         app.sdb.update("Token", {}, {totalSupply: row.totalSupply + amount});
         app.balances.increase(toaddr, CURRENCY, amount);
     },
