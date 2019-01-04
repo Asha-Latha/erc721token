@@ -88,14 +88,14 @@ function allowance1(owner, spender){
 },
 
 
-allowance:async function(owner, spender){
-  let row = await app.model.Approve.findOne({
-      owner: owner,
-      spender: spender
-  });
-  if(!row) return 0;
-  return row.tId;
-},
+// allowance:async function(owner, spender){
+//   let row =  app.model.Approve.findOne({
+//       owner: owner,
+//       spender: spender
+//   });
+//   if(!row) return 0;
+//   return row.tId;
+// },
 
 burn:async function(tId,owner){
     function require(condition, error) {
