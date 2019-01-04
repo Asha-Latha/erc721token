@@ -4,7 +4,7 @@ app.route.post('/user/bal', async function (req, cb) {
     var params = {
         owner: req.query.owner,
     };
-    var response = await app.balances.get(owner);
+    var response = await app.balances.get(params.owner);
     return response;
 });
 
