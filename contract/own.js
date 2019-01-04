@@ -19,7 +19,7 @@ module.exports = {
         let tobal = app.balances.get(toaddr, 'IXO');
         require(tobal !== undefined, 'Receiver address not found')
         require(frombal < amount, 'Insufficient balance in senders address')
-                //app.sdb.update("Balances", {balance:frombal}, {address: fromaddr});
+        //app.sdb.update("Balances", {balance:frombal}, {address: fromaddr});
         //app.sdb.update("Balances", {balance:tobal}, {address: toaddr});
         app.balances.transfer(CURRENCY, amount, fromaddr, toaddr);
         //return true;
@@ -36,7 +36,7 @@ module.exports = {
         let row = await app.model.Balances.findOne({address: spender});
         if(!row) return "Spender address not found";
         row = this.allowance1(this.trs.senderID, spender);
-        if(row === "The approval record is not found"){
+        if(!row){
             app.sdb.create("Approve", {
                 owner: this.trs.senderID,
                 spender: spender,
