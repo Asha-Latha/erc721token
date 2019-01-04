@@ -106,7 +106,7 @@ module.exports = {
                 var secret = Math.random().toString(36).substring(7);
                 //var keys = AschJS.crypto.getKeys(secret);
                 app.sdb.create("Token",{
-                    totalSupply: balanceOf(this.trs.senderID),
+                    totalSupply: app.balances.get(this.trs.senderID),
                     currency: "IXO",
                     tokenExchangeRate: "0.1",
                     dappAddress: "0xajsfjasfa2346",
