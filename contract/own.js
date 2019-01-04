@@ -1,5 +1,8 @@
 const CURRENCY = 'IXO';
-
+function balance1()
+{
+    app.sdb.create('Bal' ,{Address:owner, Balance:balance ,currency:Currency})
+}
 
 module.exports = {
 
@@ -14,9 +17,10 @@ module.exports = {
             if (!condition) throw Error(error)
           }
         var CURRENCY = 'IXO';
-        let frombal = app.balances.get(fromaddr, 'IXO');
+       // let frombal = app.balances.get(fromaddr, 'IXO');
+        let frombal = app.sdb.get('Bal', { address: fromaddr, currency: Currency });
         require(frombal !== undefined, 'Sender address not found')
-        let tobal = app.balances.get(toaddr, 'IXO');
+        let tobal =  app.sdb.get('Bal', { address: toaddr, currency: Currency })
         require(tobal !== undefined, 'Receiver address not found')
         require(frombal < amount, 'Insufficient balance in senders address')
         //app.sdb.update("Balances", {balance:frombal}, {address: fromaddr});
