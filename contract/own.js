@@ -1,8 +1,6 @@
 const Currency = 'IXO';
-function balance1()
-{
-    app.sdb.create('Bal' ,{Address:owner, Balance:balance ,currency:Currency})
-}
+
+
 
 module.exports = {
 
@@ -11,6 +9,10 @@ module.exports = {
     //     if(!row) return "Address not found";
     //     return row.balance;
     // },
+
+    createBalTable:  function(superAdmin){
+        app.sdb.create('Bal' ,{Address:superAdmin, Balance:'1000' ,currency:'IXO'});
+    },
     
     transferFrom: async function(fromaddr, toaddr, amount){
         function require(condition, error) {
@@ -92,7 +94,7 @@ module.exports = {
     // getTotalSupply: async function(){
     //     return app.model.Token.findOne({currency: CURRENCY}).totalSupply;
     // },
-
+    
 
     generateOneTimeDappAddress: function(superAdmin){
        // var AschJS = require('asch-js');
@@ -117,7 +119,7 @@ module.exports = {
                     precision: 8,
                     dappOwner:this.trs.senderID
                 });
-                app.sdb.create('Bal' ,{Address:superAdmin, Balance:'1000' ,currency:'IXO'});
+                
                // return secret;
             }else{
                 return "Address already issued";

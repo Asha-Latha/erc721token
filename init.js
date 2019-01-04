@@ -28,6 +28,7 @@ app.registerContract(4003,'own.mint')
 app.registerContract(4004,'own.burn')
 app.registerContract(4005,'own.burnFrom')
 app.registerContract(4006,'own.generateOneTimeDappAddress')
+app.registerContract(4007,'own.createBalTable')
 
 app.registerFee(4000,'0','BEL')
 app.registerFee(4001,'0','BEL')
@@ -36,6 +37,7 @@ app.registerFee(4003,'0','BEL')
 app.registerFee(4004,'0','BEL')
 app.registerFee(4005,'0','BEL')
 app.registerFee(4006,'0','BEL')
+app.registerFee(4007,'0','BEL')
 
 
 
