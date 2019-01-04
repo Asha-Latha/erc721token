@@ -1,5 +1,5 @@
 const CURRENCY = 'IXO';
-//var AschJS = require('asch-js');
+
 
 module.exports = {
 
@@ -85,6 +85,7 @@ module.exports = {
 
 
     generateOneTimeDappAddress: function(){
+        var AschJS = require('asch-js');
         //this function is designed in such a way where it can be executed absolutely once.
 
         var executed = false;              // ---> The closure variable
