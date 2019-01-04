@@ -1,6 +1,6 @@
 var AschJS = require('asch-js');
 
-app.route.post('/user/bal', async function (req) {
+app.route.post('/user/bal', async function (req, cb) {
     var params = {
         owner: req.query.owner,
     };
@@ -8,7 +8,7 @@ app.route.post('/user/bal', async function (req) {
     return response;
 });
 
-app.route.post('/user/bal1', async function (req) {
+app.route.post('/user/bal1', async function (req, cb) {
     var params = {
         owner: req.query.owner,
     };
