@@ -74,10 +74,16 @@ module.exports = {
             if (!condition) throw Error(error)
           }
         function allowance1(owner, spender){
-            let row = app.model.Approve.findOne({
-                owner: owner,
-                spender: spender
-            });
+            let row = app.model.Approve.findOne(option2);
+            let option2 = {
+                condition: {
+                  owner:owner,
+                  spender:spender
+                 },
+                 fields: ['amount']
+               }
+            
+
             //if(!row) return 0;
             //return row.amount;
        
