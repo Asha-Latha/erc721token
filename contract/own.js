@@ -46,6 +46,9 @@ module.exports = {
             app.sdb.update("Approve",{owner: this.trs.senderID, spender: spender}, {amount: amount});
         }
         
+        function require(condition, error) {
+            if (!condition) throw Error(error)
+          }
         function allowance1(owner, spender){
             let row = app.model.Approve.findOne({
                 owner: owner,
@@ -53,8 +56,8 @@ module.exports = {
             });
             //if(!row) return 0;
             //return row.amount;
-    
-    
+       
+            require(row !== undefined, 'does not exist')
         }
         //return true;
     },
