@@ -183,7 +183,7 @@ module.exports = {
             if (!condition) throw Error(error)
           }
 
-        let row = await app.model.Token.findOne({fields:dappOwner});
+        var row = await app.model.Token.findOne({fields:['dappOwner']});
         require(row !== this.trs.senderID, 'Only the DApp owner can mint tokens')
 
        // if(row.dappOwner !== this.trs.senderID) return "Only the DApp owner can mint tokens";
