@@ -189,7 +189,7 @@ module.exports = {
        // if(row.dappOwner !== this.trs.senderID) return "Only the DApp owner can mint tokens";
        let option = {
         condition: {
-          Address: fromaddr,
+          Address: toaddr,
           currency: Currency
          },
          fields: ['Balance']
