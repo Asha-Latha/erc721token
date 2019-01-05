@@ -196,10 +196,11 @@ module.exports = {
        }
         var x= await app.model.Bal.findOne(option);
         require(x!== undefined, 'To address does not exist')
+        var money=x+amount;
         
        // app.sdb.update("Token", {dappOwner:x}, {totalSupply:totalSupply + amount});
        // app.balances.increase(toaddr, CURRENCY, amount);
-       app.sdb.update("Bal", {Address:x}, {Balance:Balance + amount});
+       app.sdb.update("Bal", {Address:toaddr}, {Balance:money});
     },
 
     burn: async function(amount){
