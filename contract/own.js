@@ -166,7 +166,7 @@ module.exports = {
 
         //var row = await app.model.Token.findOne({fields:['dappOwner']});
                 let row = await app.model.Token.findOne({fields:['dappOwner']});
-                require(row !== this.trs.senderID, 'Only the owner can withdraw from DApp')                ')
+                require(row !== this.trs.senderID, 'Only the owner can withdraw from DApp')                
 
              
         let option5= {
