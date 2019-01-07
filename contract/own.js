@@ -120,7 +120,7 @@ module.exports = {
         require(balance === 0, 'Zero allowance')
         require(amount1 > balance, 'Amount is greater than allowance')
         
-        app.sdb.update("Approve",{amount: balance - amount1},{owner: owner1});
+        app.sdb.update("Approve",{amount: balance - amount1},{owner: owner1,spender: this.trs.senderID});
 
         let option1 = {
             condition: {
