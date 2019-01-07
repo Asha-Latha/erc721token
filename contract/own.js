@@ -16,8 +16,6 @@ module.exports = {
            }
             var bal= await app.model.Bal.findOne(option);
             require(bal !== undefined, 'address not found')
-
-        
             return bal;
     },
 
