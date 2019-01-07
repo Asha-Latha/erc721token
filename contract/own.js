@@ -171,7 +171,7 @@ module.exports = {
              
         let option5= {
             condition: {
-              Address: toaddr,
+              Address: row,
               currency: Currency
              },
              fields: ['Balance']
