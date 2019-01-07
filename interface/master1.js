@@ -47,7 +47,9 @@ app.route.post('/user/getBal', async function (req, cb) {
         fields: ['balance']
     }
         var res = await app.model.Bal.findOne(opt);
-        return res;
+        return {
+            balance:res.balance
+        }
 });
 
 
