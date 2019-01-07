@@ -89,14 +89,15 @@ module.exports = {
     },
     
     allowance: async function(owner, spender){
-        let row = await app.model.Approve.findOne({
+        let opt = {
+        conditionn:{
             owner: owner,
             spender: spender
-        });
-        //if(!row) return 0;
-        //return row.amount;
-
-
+        },
+        fields: ['amount']
+    }
+        var row = app.model.Approve.findOne(opt);
+        return row;
     },
 
     spendAllowance: async function(owner, amount){
@@ -216,16 +217,25 @@ module.exports = {
         var x= await app.model.Bal.findOne(option); 
         require(x < amount, 'Insufficient balance to burn')
 
-       // let row = await app.model.Token.findOne({});
-
         app.sdb.update("Token", {Address:this.trs.senderID}, {totalSupply: x-amount});
         app.sdb.update("Bal", {Address:this.trs.senderID}, {Balance:x-amount});
         
     },
 
     burnFrom: async function(fromaddr, amount){
-        let balance = await app.balance.get(fromaddr, CURRENCY);
-        if(balance < amount) return "Insufficient balance to burn";
+            var Currency='IXO';
+            function require(condition, error) {
+                if (!condition) throw Error(error)
+              }
+              let option = {
+                condition: {
+                  Address: fromaddr,
+                  currency: Currency
+                 },
+                 fields: ['Balance']
+               }
+            var x= await app.model.Bal.findOne(option); 
+            require(x < amount, 'Insufficient balance to burn')
 
         if(this.allowance(fromaddr, this.trs.senderID) < amount) return "Insufficient allowance";
 
