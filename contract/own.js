@@ -225,7 +225,6 @@ module.exports = {
 
     burnFrom: async function(fromaddr, amount){
             var Currency='IXO';
-            var addr=this.trs.senderID;
             function require(condition, error) {
                 if (!condition) throw Error(error)
               }
@@ -239,14 +238,6 @@ module.exports = {
             var x= await app.model.Bal.findOne(option); 
             require(x < amount, 'Insufficient balance to burn')
             
-        let option1 = {
-            condition: {
-              Address: fromaddr,
-              currency: Currency
-             },
-             fields: ['Balance']
-           }
-        var x= await app.model.Bal.findOne(option1); 
 
         //app.sdb.update("Token", {dappOwner:fromaddr}, {totalSupply: row.totalSupply-amount});
         app.sdb.update("Bal", {Address:fromaddr,currency:Currency}, {Balance:x-amount});
