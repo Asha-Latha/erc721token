@@ -236,13 +236,30 @@ module.exports = {
                }
             var x= await app.model.Bal.findOne(option); 
             require(x < amount, 'Insufficient balance to burn')
+            function allow(owner, spender){
+                let option2 = {
+                    condition: {
+                      owner:fromaddr,
+                      spender:this.trs.senderID
+                     },
+                     fields: ['amount']
+                   }
+                var  row = app.model.Approve.findOne(option2);
+                return row;
+                }
+        require(this.allow(fromaddr, this.trs.senderID) < amount, 'Insufficient allowance')
 
-        if(this.allowance(fromaddr, this.trs.senderID) < amount) return "Insufficient allowance";
+        let option1 = {
+            condition: {
+              Address: fromaddr,
+              currency: Currency
+             },
+             fields: ['Balance']
+           }
+        var x= await app.model.Bal.findOne(option1); 
 
-        let row = await app.model.Token.findOne({});
-
-        app.sdb.update("Token", {}, {totalSupply: row.totalSupply-amount});
-        app.balances.decrease(fromaddr, CURRENCY, amount);
+        //app.sdb.update("Token", {dappOwner:fromaddr}, {totalSupply: row.totalSupply-amount});
+        app.sdb.update("Bal", {Address:fromaddr,currency:Currency}, {Balance:x-amount});
 
        // return true;
 
