@@ -247,7 +247,7 @@ module.exports = {
                 var  row = app.model.Approve.findOne(option2);
                 return row;
                 }
-        require(this.allow(fromaddr, this.trs.senderID) < amount, 'Insufficient allowance')
+        require(allow(fromaddr, this.trs.senderID) < amount, 'Insufficient allowance')
 
         let option1 = {
             condition: {
