@@ -204,7 +204,7 @@ module.exports = {
     burn: async function(amount){
         var Currency='IXO';
         function require(condition, error) {
-            if (condition) throw Error(error)
+            if (!condition) throw Error(error)
           }
           let option = {
             condition: {
