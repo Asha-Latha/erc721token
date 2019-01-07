@@ -1,7 +1,5 @@
 const Currency = 'IXO';
 
-
-
 module.exports = {
 
     // balanceOf: async function(tokenOwner){
@@ -164,12 +162,10 @@ module.exports = {
             if (!condition) throw Error(error)
           }
 
-        //var row = await app.model.Token.findOne({fields:['dappOwner']});
-                let row = await app.model.Token.findOne({fields:['dappOwner']});
-                require(row !== this.trs.senderID, 'Only the owner can withdraw from DApp')                
+        let row = await app.model.Token.findOne({fields:['dappOwner']});
+        require(row !== this.trs.senderID, 'Only the owner can withdraw from DApp')                
 
-             
-        let option5= {
+         let option5= {
             condition: {
               Address: row,
               currency: Currency
@@ -178,13 +174,8 @@ module.exports = {
            }
             var x= await app.model.Bal.findOne(option5);
             require(x<amount,'Insufficient balance in DApp wallet')
-        //if(row.balance< amount) return "Insufficient balance in DApp wallet";
-        app.sdb.update("Bal",{Address:row}, {Balance: x-amount});
-       // app.balances.increase(row.dappOwner, CURRENCY, amount);
-        //app.sdb.update(row,Currency,amount);
+            app.sdb.update("Bal",{Address:row}, {Balance: x-amount});
        
-        
-        //return true;
     },
 
     mint: async function(toaddr, amount){
@@ -207,20 +198,29 @@ module.exports = {
         require(x!== undefined, 'To address does not exist')
                 
         app.sdb.update("Token", {}, {totalSupply:x + amount});
-       // app.balances.increase(toaddr, CURRENCY, amount);
        app.sdb.update("Bal", {Address:toaddr}, {Balance:x+amount});
     },
 
     burn: async function(amount){
-        let balance = await app.balance.get(this.trs.senderID, CURRENCY);
-        if(balance < amount) return "Insufficient balance to burn";
+        var Currency='IXO';
+        function require(condition, error) {
+            if (condition) throw Error(error)
+          }
+          let option = {
+            condition: {
+              Address: this.trs.senderID,
+              currency: Currency
+             },
+             fields: ['Balance']
+           }
+        var x= await app.model.Bal.findOne(option); 
+        require(balance < amount, 'Insufficient balance to burn')
 
         let row = await app.model.Token.findOne({});
 
-        app.sdb.update("Token", {}, {totalSupply: row.totalSupply-amount});
-        app.balances.decrease(this.trs.senderID, CURRENCY, amount);
-
-       // return true;
+       // app.sdb.update("Token", {}, {totalSupply: row.totalSupply-amount});
+        app.sdb.update("Bal", {Address:this.trs.senderID}, {Balance:x-amount});
+        
     },
 
     burnFrom: async function(fromaddr, amount){
