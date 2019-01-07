@@ -238,20 +238,8 @@ module.exports = {
                }
             var x= await app.model.Bal.findOne(option); 
             require(x < amount, 'Insufficient balance to burn')
-            allow(fromaddr, addr);
-            function allow(owner1, spender1){
-                let option2 = {
-                    condition: {
-                      owner:owner1,
-                      spender:spender1
-                     },
-                     fields: ['amount']
-                   }
-                var  row = app.model.Approve.findOne(option2)
-                require(row <amount, 'Insufficient allowance')
-                }
             
-         let option1 = {
+        let option1 = {
             condition: {
               Address: fromaddr,
               currency: Currency
