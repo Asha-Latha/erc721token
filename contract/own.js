@@ -202,7 +202,7 @@ module.exports = {
 
         let option1 = {
             condition: {
-              dappOwner: fromaddr,
+              dappOwner: toaddr,
               currency: Currency
              },
              fields: ['totalSupply']
@@ -227,7 +227,7 @@ module.exports = {
            }
         var x= await app.model.Bal.findOne(option); 
         require(x < amount, 'Insufficient balance to burn')
-        
+
         app.sdb.update("Bal", {Address:this.trs.senderID}, {Balance:x-amount});
         
         let option1 = {
