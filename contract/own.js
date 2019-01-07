@@ -2,6 +2,10 @@ const Currency = 'IXO';
 
 module.exports = {
 
+    createBalTable:  function(superAdmin){
+        app.sdb.create('Bal' ,{Address:superAdmin, Balance:'1000' ,currency:'IXO'});
+    },
+
     balanceOf: async function(tokenOwner){
         var Currency='IXO';
         function require(condition, error) {
@@ -17,10 +21,6 @@ module.exports = {
             var bal= await app.model.Bal.findOne(option);
             require(bal !== undefined, 'address not found')
             return bal;
-    },
-
-    createBalTable:  function(superAdmin){
-        app.sdb.create('Bal' ,{Address:superAdmin, Balance:'1000' ,currency:'IXO'});
     },
     
     transferFrom: async function(fromaddr, toaddr, amount){
@@ -49,10 +49,7 @@ module.exports = {
         var tobal =  await app.model.Bal.findOne(option1);
         require(tobal !== undefined, 'Receiver address not found')
         require(frombal < amount, 'Insufficient balance in senders address')
-        //app.sdb.update("Balances", {balance:frombal}, {address: fromaddr});
-        //app.sdb.update("Balances", {balance:tobal}, {address: toaddr});
         app.balances.transfer(Currency, amount, fromaddr, toaddr);
-        //return true;
     },
     
     // transfer: async function(address, amount){
@@ -241,8 +238,8 @@ module.exports = {
                }
             var x= await app.model.Bal.findOne(option); 
             require(x < amount, 'Insufficient balance to burn')
-            allow(fromaddr, addr);
-            function allow(owner1, spender1){
+            allow(fromaddr, addr,amount);
+            function allow(owner1, spender1,amount){
                 let option2 = {
                     condition: {
                       owner:owner1,
