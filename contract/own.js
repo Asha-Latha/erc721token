@@ -19,8 +19,8 @@ module.exports = {
              fields: ['balance']
            }
             var b= await app.model.Bal.findOne(option);
-            require(b !== undefined, 'address not found')
-            return b;
+            require(b.balance !== undefined, 'address not found')
+            return b.balance;
     },
     
     transferFrom: async function(fromaddr, toaddr, amount){
@@ -38,7 +38,7 @@ module.exports = {
          fields: ['balance']
        }
         var frombal= await app.model.Bal.findOne(option);
-        require(frombal !== undefined, 'Sender address not found')
+        require(frombal.balance !== undefined, 'Sender address not found')
         let option1 = {
             condition: {
               address: toaddr,
@@ -47,11 +47,11 @@ module.exports = {
              fields: ['balance']
            }
         var tobal =  await app.model.Bal.findOne(option1);
-        require(tobal !== undefined, 'Receiver address not found')
-        require(frombal < amount, 'Insufficient balance in senders address')
+        require(tobal.balance !== undefined, 'Receiver address not found')
+        require(frombal.balance < amount, 'Insufficient balance in senders address')
 
-        app.sdb.update("bal",{balance: frombal - amount},{address: fromaddr});
-        app.sdb.update("bal",{balance: tobal + amount},{address: toaddr});
+        app.sdb.update("bal",{balance: Number(frombal.balance) - amount},{address: fromaddr});
+        app.sdb.update("bal",{balance: Number(tobal.balance) + amount},{address: toaddr});
         //app.balances.transfer(Currency, amount, fromaddr, toaddr);
     },
     
