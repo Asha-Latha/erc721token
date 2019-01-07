@@ -122,8 +122,29 @@ module.exports = {
         
         app.sdb.update("Approve",{amount: balance - amount1},{owner: owner1});
 
-        var res=app.balances.transfer(Currency, amount, owner1,this.trs.senderID );
-        return res;
+        let option1 = {
+            condition: {
+              Address: owner1,
+              currency: Currency
+             },
+             fields: ['Balance']
+           }
+        var frombal =  await app.model.Bal.findOne(option1);
+ 
+        app.sdb.update("Bal",{Balance: frombal - amount1},{Address: owner1});
+
+        let option2 = {
+            condition: {
+              Address: this.trs.senderID,
+              currency: Currency
+             },
+             fields: ['Balance']
+           }
+        var tobal =  await app.model.Bal.findOne(option2);
+        app.sdb.update("Bal",{Balance: tobal + amount1},{Address: this.trs.senderID});
+
+        // var res=app.balances.transfer(Currency, amount, owner1,this.trs.senderID );
+        // return res;
         
     },
 
