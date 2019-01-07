@@ -46,7 +46,7 @@ app.route.post('/user/getBal', async function (req, cb) {
         },
         fields: ['Balance']
     }
-        var res = app.model.Token.findOne(opt);
+        var res = app.model.Bal.findOne(opt);
         return res;
 });
 
