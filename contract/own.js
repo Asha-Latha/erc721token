@@ -38,7 +38,7 @@ module.exports = {
          fields: ['balance']
        }
         var frombal= await app.model.Bal.findOne(option);
-        require((frombal) !== undefined, 'Sender address not found')
+        require((frombal) == undefined, 'Sender address not found')
         let option1 = {
             condition: {
               address: toaddr,
