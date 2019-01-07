@@ -114,13 +114,13 @@ module.exports = {
             fields: ['amount']
         }
          var balance = app.model.Approve.findOne(opt);
-        if(balance === 0) return "Zero allowance";
+        require(balance === 0, 'Zero allowance')
         require(amount > balance, 'Amount is greater than allowance')
         
         app.sdb.update("Approve", {amount: balance-amount},{owner: owner});
 
         var res=app.balances.transfer(Currency, amount, owner,this.trs.senderID );
-        return res;
+        //return res;
         
     },
 
