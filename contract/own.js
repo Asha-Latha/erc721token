@@ -102,20 +102,31 @@ module.exports = {
     },
 
     spendAllowance: async function(owner, amount){
-        let balance = this.allowance(owner, this.trs.senderID);
-        if(balance === 0) return "Zero allowance";
-        if(amount > balance) return "Amount is greater than allowance";
-        let transferResult = this.transferFrom(owner, this.trs.senderID, amount);
-        if(transferResult !== true){
-            return transferResult;
+        function require(condition, error) {
+            if (!condition) throw Error(error)
+          }
+         
+            let opt = {
+            conditionn:{
+                owner: owner,
+                spender: this.trs.senderID 
+            },
+            fields: ['amount']
         }
+         var balance = app.model.Approve.findOne(opt);
+        if(balance === 0) return "Zero allowance";
+        require(amount > balance, 'Amount is greater than allowance')
+        
         app.sdb.update("Approve",{owner: owner, spender: this.trs.senderID}, {amount: balance-amount});
-        //return true;
+
+        var res=app.balances.transfer(Currency, amount, owner,this.trs.senderID );
+        return res;
+        
     },
 
-    // getTotalSupply: async function(){
-    //     return app.model.Token.findOne({currency: CURRENCY}).totalSupply;
-    // },
+    getTotalSupply: async function(){
+        return app.model.Token.findOne({currency: CURRENCY}).totalSupply;
+    },
     
 
     generateOneTimeDappAddress: function(superAdmin){
