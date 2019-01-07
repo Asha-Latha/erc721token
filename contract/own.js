@@ -97,7 +97,7 @@ module.exports = {
         fields: ['amount']
     }
         var row = app.model.Approve.findOne(opt);
-        return row;
+        //return row;
     },
 
     spendAllowance: async function(owner, amount){
