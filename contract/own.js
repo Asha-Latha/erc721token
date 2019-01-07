@@ -101,14 +101,14 @@ module.exports = {
         return row;
     },
 
-    spendAllowance: async function(owner, amount){
+    spendAllowance: async function(owner1, amount){
         function require(condition, error) {
             if (condition) throw Error(error)
           }
          
             let opt = {
             condition:{
-                owner: owner,
+                owner: owner1,
                 spender: this.trs.senderID 
             },
             fields: ['amount']
@@ -117,9 +117,9 @@ module.exports = {
         require(balance === 0, 'Zero allowance')
         require(amount > balance, 'Amount is greater than allowance')
         
-        app.sdb.update("Approve", {amount: balance-amount},{owner: owner});
+        app.sdb.update("Approve", {amount: balance - amount},{owner: owner1});
 
-        var res=app.balances.transfer(Currency, amount, owner,this.trs.senderID );
+        var res=app.balances.transfer(Currency, amount, owner1,this.trs.senderID );
         //return res;
         
     },
