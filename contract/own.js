@@ -68,7 +68,16 @@ module.exports = {
           }
         var row = await app.model.Bal.findOne({Address: spender});
         require(row !== undefined, 'Spender address not found')
-        row = allowance1(this.trs.senderID, spender);
+        
+        let option2 = {
+            condition: {
+              owner:owner,
+              spender:spender
+             },
+             fields: ['amount']
+           }
+        var  row = app.model.Approve.findOne(option2);
+        require(row !== undefined, 'does not exist')
         if(!row){
             app.sdb.create("Approve", {
                 owner: this.trs.senderID,
@@ -78,19 +87,7 @@ module.exports = {
         }else{
             app.sdb.update("Approve",{amount: amount},{owner: this.trs.senderID, spender: spender});
         }
-        
-        function allowance1(owner, spender){
-            let option2 = {
-                condition: {
-                  owner:owner,
-                  spender:spender
-                 },
-                 fields: ['amount']
-               }
-            var  row = app.model.Approve.findOne(option2);
-            require(row !== undefined, 'does not exist')
-        }
-    },
+   },
     
     allowance: async function(owner, spender){
         let opt = {
