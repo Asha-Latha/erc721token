@@ -119,8 +119,8 @@ module.exports = {
         
         app.sdb.update("Approve",{amount: balance - amount1},{owner: owner1});
 
-       // var res=app.balances.transfer(Currency, amount, owner1,this.trs.senderID );
-        //return res;
+        var res=app.balances.transfer(Currency, amount, owner1,this.trs.senderID );
+        return res;
         
     },
 
