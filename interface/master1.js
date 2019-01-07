@@ -42,7 +42,7 @@ app.route.post('/user/getBal', async function (req, cb) {
     };
     let opt = {
         condition:{
-            Address:owner
+            Address:params.owner
         },
         fields: ['Balance']
     }
