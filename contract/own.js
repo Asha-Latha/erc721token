@@ -240,7 +240,7 @@ module.exports = {
             
 
         //app.sdb.update("Token", {dappOwner:fromaddr}, {totalSupply: row.totalSupply-amount});
-        app.sdb.update("Bal", {Address:fromaddr,currency:Currency}, {Balance:x-amount});
+        app.sdb.update("Bal", {Address:fromaddr}, {Balance:x-amount});
 
     }
 
