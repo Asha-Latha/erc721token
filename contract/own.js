@@ -47,7 +47,7 @@ module.exports = {
              fields: ['balance']
            }
         var tobal =  await app.model.Bal.findOne(option1);
-        require(tobal !== undefined, 'Receiver address not found')
+        require(tobal == undefined, 'Receiver address not found')
         require((frombal) < amount, 'Insufficient balance in senders address')
 
         app.sdb.update("bal",{balance: Number(frombal.balance) - amount},{address: fromaddr});
