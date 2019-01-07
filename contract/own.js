@@ -103,7 +103,7 @@ module.exports = {
 
     spendAllowance: async function(owner, amount){
         function require(condition, error) {
-            if (!condition) throw Error(error)
+            if (condition) throw Error(error)
           }
          
             let opt = {
