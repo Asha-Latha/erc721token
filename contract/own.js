@@ -237,9 +237,16 @@ module.exports = {
                }
             var x= await app.model.Bal.findOne(option); 
             require(x < amount, 'Insufficient balance to burn')
-            
-
-        //app.sdb.update("Token", {dappOwner:fromaddr}, {totalSupply: row.totalSupply-amount});
+            let option1 = {
+                condition: {
+                  dappOwner: fromaddr,
+                  currency: Currency
+                 },
+                 fields: ['totalSupply']
+               }
+            var totSup= await app.model.Token.findOne(option1); 
+         
+        app.sdb.update("Token", {dappOwner:fromaddr}, {totalSupply: totSup-amount});
         app.sdb.update("Bal", {Address:fromaddr}, {Balance:x-amount});
 
     }
