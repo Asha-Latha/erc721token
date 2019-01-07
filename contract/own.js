@@ -214,9 +214,9 @@ module.exports = {
              fields: ['Balance']
            }
         var x= await app.model.Bal.findOne(option); 
-        require(balance < amount, 'Insufficient balance to burn')
+        require(x < amount, 'Insufficient balance to burn')
 
-        let row = await app.model.Token.findOne({});
+       // let row = await app.model.Token.findOne({});
 
        // app.sdb.update("Token", {}, {totalSupply: row.totalSupply-amount});
         app.sdb.update("Bal", {Address:this.trs.senderID}, {Balance:x-amount});
