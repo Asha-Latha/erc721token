@@ -25,7 +25,7 @@ module.exports = {
     
     transferFrom: async function(fromaddr, toaddr, amount){
         function require(condition, error) {
-            if (!condition) throw Error(error)
+            if (condition) throw Error(error)
           }
 
         var Currency = 'IXO';
