@@ -1,5 +1,5 @@
 module.exports = {
-    name: 'mappings',
+    name: 'approves',
     fields: [
       {
         name: 'owner',

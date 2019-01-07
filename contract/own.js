@@ -3,7 +3,7 @@ const Currency = 'IXO';
 module.exports = {
 
     createBalTable:  function(superAdmin){
-        app.sdb.create('Bal' ,{Address:superAdmin, Balance:'1000' ,currency:'IXO'});
+        app.sdb.create('bal' ,{address:superAdmin, balance:'1000' ,currency:'IXO'});
     },
 
     balanceOf: async function(tokenOwner){
@@ -13,14 +13,14 @@ module.exports = {
           }
         let option = {
             condition: {
-              Address: tokenOwner,
+              address: tokenOwner,
               currency: Currency
              },
-             fields: ['Balance']
+             fields: ['balance']
            }
-            var bal= await app.model.Bal.findOne(option);
-            require(bal !== undefined, 'address not found')
-            return bal;
+            var b= await app.model.Bal.findOne(option);
+            require(b !== undefined, 'address not found')
+            return b;
     },
     
     transferFrom: async function(fromaddr, toaddr, amount){
@@ -32,26 +32,26 @@ module.exports = {
 
         let option = {
         condition: {
-          Address: fromaddr,
+          address: fromaddr,
           currency: Currency
          },
-         fields: ['Balance']
+         fields: ['balance']
        }
         var frombal= await app.model.Bal.findOne(option);
         require(frombal !== undefined, 'Sender address not found')
         let option1 = {
             condition: {
-              Address: toaddr,
+              address: toaddr,
               currency: Currency
              },
-             fields: ['Balance']
+             fields: ['balance']
            }
         var tobal =  await app.model.Bal.findOne(option1);
         require(tobal !== undefined, 'Receiver address not found')
         require(frombal < amount, 'Insufficient balance in senders address')
 
-        app.sdb.update("Bal",{Balance: frombal - amount},{Address: fromaddr});
-        app.sdb.update("Bal",{Balance: tobal + amount},{Address: toaddr});
+        app.sdb.update("bal",{balance: frombal - amount},{address: fromaddr});
+        app.sdb.update("bal",{balance: tobal + amount},{address: toaddr});
         //app.balances.transfer(Currency, amount, fromaddr, toaddr);
     },
     
@@ -79,19 +79,19 @@ module.exports = {
         var  row = app.model.Approve.findOne(option2);
         require(row !== undefined, 'does not exist')
         if(!row){
-            app.sdb.create("Approve", {
+            app.sdb.create("approve", {
                 owner: this.trs.senderID,
                 spender: spender,
                 amount: amount
             });
         }else{
-            app.sdb.update("Approve",{amount: amount},{owner: this.trs.senderID, spender: spender});
+            app.sdb.update("approve",{amount: amount},{owner: this.trs.senderID, spender: spender});
         }
    },
     
     allowance: async function(owner, spender){
         let opt = {
-        conditionn:{
+        condition:{
             owner: owner,
             spender: spender
         },
@@ -121,24 +121,24 @@ module.exports = {
 
         let option1 = {
             condition: {
-              Address: owner1,
+              address: owner1,
               currency: Currency
              },
-             fields: ['Balance']
+             fields: ['balance']
            }
         var frombal =  await app.model.Bal.findOne(option1);
  
-        app.sdb.update("Bal",{Balance: frombal - amount1},{Address: owner1});
+        app.sdb.update("bal",{balance: frombal - amount1},{address: owner1});
 
         let option2 = {
             condition: {
-              Address: this.trs.senderID,
+              address: this.trs.senderID,
               currency: Currency
              },
-             fields: ['Balance']
+             fields: ['balance']
            }
         var tobal =  await app.model.Bal.findOne(option2);
-        app.sdb.update("Bal",{Balance: tobal + amount1},{Address: this.trs.senderID});
+        app.sdb.update("bal",{balance: tobal + amount1},{address: this.trs.senderID});
 
         // var res=app.balances.transfer(Currency, amount, owner1,this.trs.senderID );
         // return res;
@@ -161,7 +161,7 @@ module.exports = {
 
                 var secret = Math.random().toString(36).substring(7);
                 //var keys = AschJS.crypto.getKeys(secret);
-                app.sdb.create("Token",{
+                app.sdb.create("token",{
                     totalSupply: app.balances.get(this.trs.senderID),
                     currency: "IXO",
                     tokenExchangeRate: "0.1",
@@ -201,14 +201,14 @@ module.exports = {
 
          let option5= {
             condition: {
-              Address: row,
+              address: row,
               currency: Currency
              },
-             fields: ['Balance']
+             fields: ['balance']
            }
             var x= await app.model.Bal.findOne(option5);
             require(x<amount,'Insufficient balance in DApp wallet')
-            app.sdb.update("Bal", {Balance: x-amount},{Address:row});
+            app.sdb.update("bal", {balance: x-amount},{address:row});
        
     },
 
@@ -223,14 +223,14 @@ module.exports = {
 
        let option = {
         condition: {
-          Address: toaddr,
+          address: toaddr,
           currency: Currency
          },
-         fields: ['Balance']
+         fields: ['balance']
        }
         var x= await app.model.Bal.findOne(option);
         require(x!== undefined, 'To address does not exist')
-        app.sdb.update("Bal",{Balance:x+amount}, {Address:toaddr});
+        app.sdb.update("bal",{balance:x+amount}, {bddress:toaddr});
 
         let option1 = {
             condition: {
@@ -241,7 +241,7 @@ module.exports = {
            }
         var tot= await app.model.Token.findOne(option1); 
      
-       app.sdb.update("Token",{totalSupply:tot + amount}, {dappOwner:toaddr});
+       app.sdb.update("token",{totalSupply:tot + amount}, {dappOwner:toaddr});
        
     },
 
@@ -252,15 +252,15 @@ module.exports = {
           }
           let option = {
             condition: {
-              Address: this.trs.senderID,
+              address: this.trs.senderID,
               currency: Currency
              },
-             fields: ['Balance']
+             fields: ['balance']
            }
         var x= await app.model.Bal.findOne(option); 
         require(x < amount, 'Insufficient balance to burn')
 
-        app.sdb.update("Bal", {Balance:x-amount}, {Address:this.trs.senderID});
+        app.sdb.update("bal", {balance:x-amount}, {address:this.trs.senderID});
         
         let option1 = {
             condition: {
@@ -271,7 +271,7 @@ module.exports = {
            }
         var total= await app.model.Token.findOne(option1); 
      
-       app.sdb.update("Token", {totalSupply:total - amount}, {dappOwner:this.trs.senderID});
+       app.sdb.update("token", {totalSupply:total - amount}, {dappOwner:this.trs.senderID});
 
     },
 
@@ -282,10 +282,10 @@ module.exports = {
               }
               let option = {
                 condition: {
-                  Address: fromaddr,
+                  address: fromaddr,
                   currency: Currency
                  },
-                 fields: ['Balance']
+                 fields: ['balance']
                }
             var x= await app.model.Bal.findOne(option); 
             require(x < amount, 'Insufficient balance to burn')
@@ -298,8 +298,8 @@ module.exports = {
                }
             var totSup= await app.model.Token.findOne(option1); 
          
-        app.sdb.update("Token", {totalSupply: totSup-amount}, {dappOwner:fromaddr});
-        app.sdb.update("Bal", {Balance:x-amount}, {Address:fromaddr});
+        app.sdb.update("token", {totalSupply: totSup-amount}, {dappOwner:fromaddr});
+        app.sdb.update("bal", {balance:x-amount}, {address:fromaddr});
 
     }
 

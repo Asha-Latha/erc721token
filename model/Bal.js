@@ -1,13 +1,13 @@
 module.exports = {
-    name: 'balances',
+    name: 'bals',
     fields: [
       {
-        name: 'Address',
+        name: 'address',
         type: 'String',
         length: 256
       },
       {
-        name: 'Balance',
+        name: 'balance',
         type: 'String',
         length: 255
       },

@@ -42,11 +42,11 @@ app.route.post('/user/getBal', async function (req, cb) {
     };
     let opt = {
         condition:{
-            Address:params.owner
+            address:params.owner
         },
-        fields: ['Balance']
+        fields: ['balance']
     }
-        var res = app.model.Bal.findOne(opt);
+        var res = await app.model.Bal.findOne(opt);
         return res;
 });
 
