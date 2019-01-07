@@ -29,7 +29,7 @@ app.registerContract(4004,'own.burn')
 app.registerContract(4005,'own.burnFrom')
 app.registerContract(4006,'own.generateOneTimeDappAddress')
 app.registerContract(4007,'own.createBalTable')
-app.registerContract(4008,'allowance')
+app.registerContract(4008,'own.allowance')
 
 app.registerFee(4000,'0','BEL')
 app.registerFee(4001,'0','BEL')
