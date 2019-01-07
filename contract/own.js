@@ -219,6 +219,7 @@ module.exports = {
           }
 
         var row = await app.model.Token.findOne({fields:['dappOwner']});
+        console.log("Got object: " + JSON.stringify(row));
         require(row !== this.trs.senderID, 'Only the DApp owner can mint tokens')
 
        let option = {
@@ -230,7 +231,7 @@ module.exports = {
        }
         var x= await app.model.Bal.findOne(option);
         require(x!== undefined, 'To address does not exist')
-        app.sdb.update("bal",{balance:x+amount}, {bddress:toaddr});
+        app.sdb.update("bal",{balance:x+amount}, {address:toaddr});
 
         let option1 = {
             condition: {
