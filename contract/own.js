@@ -198,9 +198,19 @@ module.exports = {
        }
         var x= await app.model.Bal.findOne(option);
         require(x!== undefined, 'To address does not exist')
-                
-        app.sdb.update("Token", {}, {totalSupply:x + amount});
-       app.sdb.update("Bal", {Address:toaddr}, {Balance:x+amount});
+        app.sdb.update("Bal", {Address:toaddr}, {Balance:x+amount});
+
+        let option1 = {
+            condition: {
+              dappOwner: fromaddr,
+              currency: Currency
+             },
+             fields: ['totalSupply']
+           }
+        var tot= await app.model.Token.findOne(option1); 
+     
+       app.sdb.update("Token", {dappOwner:toaddr}, {totalSupply:tot + amount});
+       
     },
 
     burn: async function(amount){
@@ -217,10 +227,20 @@ module.exports = {
            }
         var x= await app.model.Bal.findOne(option); 
         require(x < amount, 'Insufficient balance to burn')
-
-        app.sdb.update("Token", {Address:this.trs.senderID}, {totalSupply: x-amount});
+        
         app.sdb.update("Bal", {Address:this.trs.senderID}, {Balance:x-amount});
         
+        let option1 = {
+            condition: {
+              dappOwner: fromaddr,
+              currency: Currency
+             },
+             fields: ['totalSupply']
+           }
+        var total= await app.model.Token.findOne(option1); 
+     
+       app.sdb.update("Token", {dappOwner:this.trs.senderID}, {totalSupply:total - amount});
+
     },
 
     burnFrom: async function(fromaddr, amount){
