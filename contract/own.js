@@ -3,7 +3,7 @@ const Currency = 'IXO';
 module.exports = {
 
     createBalTable:  function(superAdmin){
-        app.sdb.create('bal' ,{address:superAdmin, balance:'1000' ,currency:'IXO'});
+        app.sdb.create('bal' ,{address:superAdmin, balance:'0' ,currency:'IXO'});
     },
 
     balanceOf: async function(tokenOwner){
