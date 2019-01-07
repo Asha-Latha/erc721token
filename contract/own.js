@@ -2,11 +2,24 @@ const Currency = 'IXO';
 
 module.exports = {
 
-    // balanceOf: async function(tokenOwner){
-    //     let row = app.balances.get(tokenOwner, CURRENCY);
-    //     if(!row) return "Address not found";
-    //     return row.balance;
-    // },
+    balanceOf: async function(tokenOwner){
+        var Currency='IXO';
+        function require(condition, error) {
+            if (!condition) throw Error(error)
+          }
+        let option = {
+            condition: {
+              Address: tokenOwner,
+              currency: Currency
+             },
+             fields: ['Balance']
+           }
+            var bal= await app.model.Bal.findOne(option);
+            require(bal !== undefined, 'address not found')
+
+        
+            return bal;
+    },
 
     createBalTable:  function(superAdmin){
         app.sdb.create('Bal' ,{Address:superAdmin, Balance:'1000' ,currency:'IXO'});
@@ -77,15 +90,8 @@ module.exports = {
                  fields: ['amount']
                }
             var  row = app.model.Approve.findOne(option2);
-            
-            
-
-            //if(!row) return 0;
-            //return row.amount;
-       
             require(row !== undefined, 'does not exist')
         }
-        //return true;
     },
     
     allowance: async function(owner, spender){
@@ -237,23 +243,20 @@ module.exports = {
                }
             var x= await app.model.Bal.findOne(option); 
             require(x < amount, 'Insufficient balance to burn')
-            var test=allow(fromaddr, addr);
-            function allow(owner, spender){
+            allow(fromaddr, addr);
+            function allow(owner1, spender1){
                 let option2 = {
                     condition: {
-                      owner:fromaddr,
-                      spender:addr
+                      owner:owner1,
+                      spender:spender1
                      },
                      fields: ['amount']
                    }
                 var  row = app.model.Approve.findOne(option2);
-                //return row;
-
                 require(row < amount, 'Insufficient allowance')
                 }
             
-
-        let option1 = {
+         let option1 = {
             condition: {
               Address: fromaddr,
               currency: Currency
