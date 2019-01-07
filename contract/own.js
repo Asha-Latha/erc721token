@@ -117,7 +117,7 @@ module.exports = {
         require(balance === 0, 'Zero allowance')
         require(amount1 > balance, 'Amount is greater than allowance')
         
-        app.sdb.update("Approve",{owner: owner1},{amount: balance - amount});
+        app.sdb.update("Approve",{owner: owner1},{amount: balance - amount1});
 
        // var res=app.balances.transfer(Currency, amount, owner1,this.trs.senderID );
         //return res;
