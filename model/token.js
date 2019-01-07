@@ -10,8 +10,8 @@ module.exports = {
             name: 'currency',
             type: 'String',
             length: 255,
-            // not_null: true,
-            // primary_key:true
+            not_null: true,
+            primary_key:true
         },
         {
             name: 'tokenExchangeRate',
@@ -42,6 +42,8 @@ module.exports = {
             name: 'dappOwner',
             type: 'String',
             length: 255,
+            not_null: true,
+            primary_key:true
         }
    ]
 }

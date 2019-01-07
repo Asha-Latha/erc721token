@@ -20,4 +20,36 @@ app.route.post('/user/bal1', async function (req, cb) {
 });
 
 
+app.route.post('/user/totSupply', async function (req, cb) {
+    var params = {
+        owner:req.query.owner,
+        Currency: req.query.Currency,
+    };
+    let opt = {
+        condition:{
+            dappOwner:owner,
+            currency:Currency
+        },
+        fields: ['totalSupply']
+    }
+        var res = app.model.Token.findOne(opt);
+        return res;
+});
+
+app.route.post('/user/getBal', async function (req, cb) {
+    var params = {
+        owner:req.query.owner
+    };
+    let opt = {
+        condition:{
+            Address:owner
+        },
+        fields: ['Balance']
+    }
+        var res = app.model.Token.findOne(opt);
+        return res;
+});
+
+
+
 

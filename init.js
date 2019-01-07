@@ -48,6 +48,8 @@ app.registerFee(4010,'0','BEL')
 
 
 
+
+
   app.events.on('newBlock', (block) => {
     console.log('new block received', block.height)
   })
