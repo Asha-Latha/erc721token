@@ -232,7 +232,7 @@ module.exports = {
         
         let option1 = {
             condition: {
-              dappOwner: fromaddr,
+              dappOwner: this.trs.senderID,
               currency: Currency
              },
              fields: ['totalSupply']
