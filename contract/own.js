@@ -101,7 +101,7 @@ module.exports = {
         return row;
     },
 
-    spendAllowance: async function(owner1, amount){
+    spendAllowance: async function(owner1, amount1){
         function require(condition, error) {
             if (condition) throw Error(error)
           }
@@ -115,11 +115,11 @@ module.exports = {
         }
          var balance = app.model.Approve.findOne(opt);
         require(balance === 0, 'Zero allowance')
-        require(amount > balance, 'Amount is greater than allowance')
+        require(amount1 > balance, 'Amount is greater than allowance')
         
         app.sdb.update("Approve",{owner: owner1},{amount: balance - amount});
 
-        var res=app.balances.transfer(Currency, amount, owner1,this.trs.senderID );
+       // var res=app.balances.transfer(Currency, amount, owner1,this.trs.senderID );
         //return res;
         
     },
