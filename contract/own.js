@@ -247,9 +247,11 @@ module.exports = {
                      fields: ['amount']
                    }
                 var  row = app.model.Approve.findOne(option2);
-                return row;
+                //return row;
+
+                require(row < amount, 'Insufficient allowance')
                 }
-            require(test < amount, 'Insufficient allowance')
+            
 
         let option1 = {
             condition: {
