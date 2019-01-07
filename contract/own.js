@@ -18,9 +18,9 @@ module.exports = {
         function require(condition, error) {
             if (!condition) throw Error(error)
           }
+
         var Currency = 'IXO';
-       // let frombal = app.balances.get(fromaddr, 'IXO');
-       // let frombal = app.sdb.get('Bal', { address: fromaddr, currency: Currency });
+
         let option = {
         condition: {
           Address: fromaddr,
@@ -157,22 +157,32 @@ module.exports = {
     //     return await app.model.Token.findOne({}).dappAddress;
     // },
 
-    withdrawFromDAppAddress: async function(currency,amount){
+    withdrawFromDAppAddress: async function(Currency,amount){
         //can include this so only owner of the DApp can withdraw funds in the DApp wallet.
+        var Currency='IXO';
+        function require(condition, error) {
+            if (!condition) throw Error(error)
+          }
 
-        let row = await app.model.Token.findOne({});
-        if(row.dappOwner !==  this.trs.senderID) return "Only the owner can withdraw from DApp";
-        
-        //app.balances.increase(row, currency, 'amount')       
-        //app.balances.decrease(dappAddress, 'BEL', '100000')       
-        //app.balances.increase('818391397252437407IN', 'BEL', '300000')       
-        //app.balances.get('A9fDpCe9FGQ14VwJdc1FpycxsJ9jN3TtwfIN', 'BEL')       
-        //app.balances.transfer('BEL', '10000', 'A9fDpCe9FGQ14VwJdc1FpycxsJ9jN3Ttwf', '818391397252437407IN') 
+        //var row = await app.model.Token.findOne({fields:['dappOwner']});
+                let row = await app.model.Token.findOne({fields:['dappOwner']});
+                require(row !== this.trs.senderID, 'Only the owner can withdraw from DApp')                ')
 
-        if(row.balance < amount) return "Insufficient balance in DApp wallet";
-
-        app.sdb.update("Token", {}, {balance: row.balance-amount});
-        app.balances.increase(row.dappOwner, CURRENCY, amount);
+             
+        let option5= {
+            condition: {
+              Address: toaddr,
+              currency: Currency
+             },
+             fields: ['Balance']
+           }
+            var x= await app.model.Bal.findOne(option5);
+            require(x<amount,'Insufficient balance in DApp wallet')
+        //if(row.balance< amount) return "Insufficient balance in DApp wallet";
+        app.sdb.update("Bal",{Address:row}, {Balance: x-amount});
+       // app.balances.increase(row.dappOwner, CURRENCY, amount);
+        //app.sdb.update(row,Currency,amount);
+       
         
         //return true;
     },
@@ -186,7 +196,6 @@ module.exports = {
         var row = await app.model.Token.findOne({fields:['dappOwner']});
         require(row !== this.trs.senderID, 'Only the DApp owner can mint tokens')
 
-       // if(row.dappOwner !== this.trs.senderID) return "Only the DApp owner can mint tokens";
        let option = {
         condition: {
           Address: toaddr,
@@ -229,7 +238,4 @@ module.exports = {
 
     }
 
-   // event Transfer: 
-
-   // event Approval:
 }
