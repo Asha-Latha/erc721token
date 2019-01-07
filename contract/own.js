@@ -240,6 +240,7 @@ module.exports = {
             require(x < amount, 'Insufficient balance to burn')
             allow(fromaddr, addr,amount);
             function allow(owner1, spender1,amount){
+                var amount1=amount;
                 let option2 = {
                     condition: {
                       owner:owner1,
@@ -248,7 +249,7 @@ module.exports = {
                      fields: ['amount']
                    }
                 var  row = app.model.Approve.findOne(option2);
-                require(row < amount!==undefined, 'Insufficient allowance')
+                require(row <amount1, 'Insufficient allowance')
                 }
             
          let option1 = {
