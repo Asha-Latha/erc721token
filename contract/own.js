@@ -232,17 +232,6 @@ module.exports = {
         var x= await app.model.Bal.findOne(option);
         require(x!== undefined, 'To address does not exist')
         app.sdb.update("bal",{balance: Number(x.balance) - -amount}, {address:toaddr});
-
-        let option1 = {
-            condition: {
-              dappOwner: toaddr,
-              currency: Currency
-             },
-             fields: ['totalSupply']
-           }
-        var tot= await app.model.Token.findOne(option1); 
-     
-       app.sdb.update("token",{totalSupply:tot.totalSupply + amount}, {dappOwner:toaddr});
        
     },
 
