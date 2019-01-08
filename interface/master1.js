@@ -1,4 +1,4 @@
-//var AschJS = require('asch-js');
+var AschJS = require('asch-js');
 
 app.route.post('/user/bal', async function (req, cb) {
     var params = {
