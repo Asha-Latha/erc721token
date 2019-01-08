@@ -242,7 +242,7 @@ module.exports = {
            }
         var tot= await app.model.Token.findOne(option1); 
      
-       app.sdb.update("token",{totalSupply:tot + amount}, {dappOwner:toaddr});
+       app.sdb.update("token",{totalSupply: Number(tot.totalSupply) + amount}, {dappOwner:toaddr});
        
     },
 
