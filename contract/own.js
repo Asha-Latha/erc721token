@@ -2,8 +2,8 @@ const Currency = 'IXO';
 
 module.exports = {
 
-    createBalTable:  function(owner){
-        app.sdb.create('bal' ,{address:owner, balance:'0' ,currency:'IXO'});
+    createBalTable:  function(superAdmin){
+        app.sdb.create('bal' ,{address:superAdmin, balance:'0' ,currency:'IXO'});
     },
 
     balanceOf: async function(tokenOwner){
@@ -218,9 +218,9 @@ module.exports = {
             if (!condition) throw Error(error)
           }
 
-        //var row = await app.model.Token.findOne({fields:['dappOwner']});
-       // console.log("Got object: " + JSON.stringify(row));
-        //require(row !== this.trs.senderID, 'Only the DApp owner can mint tokens')
+        var row = await app.model.Token.findOne({fields:['dappOwner']});
+        console.log("Got object: " + JSON.stringify(row));
+        require(row !== this.trs.senderID, 'Only the DApp owner can mint tokens')
 
        let option = {
         condition: {
@@ -230,9 +230,19 @@ module.exports = {
          fields: ['balance']
        }
         var x= await app.model.Bal.findOne(option);
-        require(Number(x.balance)!== undefined, 'To address does not exist')
+        require(x!== undefined, 'To address does not exist')
         app.sdb.update("bal",{balance: Number(x.balance) - -amount}, {address:toaddr});
 
+        let option1 = {
+            condition: {
+              dappOwner: toaddr,
+              currency: Currency
+             },
+             fields: ['totalSupply']
+           }
+        var tot= await app.model.Token.findOne(option1); 
+     
+       app.sdb.update("token",{totalSupply:tot + amount}, {dappOwner:toaddr});
        
     },
 
@@ -241,29 +251,28 @@ module.exports = {
         function require(condition, error) {
             if (condition) throw Error(error)
           }
-          console.log("the id " + JSON.stringify(this.trs));
           let option = {
             condition: {
-              address: this.trs.senderId,
+              address: this.trs.senderID,
               currency: Currency
              },
              fields: ['balance']
            }
         var x= await app.model.Bal.findOne(option); 
         require(Number(x.balance) < amount, 'Insufficient balance to burn')
-        
-        app.sdb.update("bal", {balance:Number(x.balance)-amount}, {address:this.trs.senderId});
+
+        app.sdb.update("bal", {balance:Number(x.balance)-amount}, {address:this.trs.senderID});
         
         let option1 = {
             condition: {
-              dappOwner: this.trs.senderId,
+              dappOwner: this.trs.senderID,
               currency: Currency
              },
              fields: ['totalSupply']
            }
         var total= await app.model.Token.findOne(option1); 
      
-       app.sdb.update("token", {totalSupply:total - amount}, {dappOwner:this.trs.senderId});
+       app.sdb.update("token", {totalSupply:total - amount}, {dappOwner:this.trs.senderID});
 
     },
 
@@ -281,17 +290,17 @@ module.exports = {
                }
             var x= await app.model.Bal.findOne(option); 
             require(x < amount, 'Insufficient balance to burn')
-            let option1 = {
-                condition: {
-                  dappOwner: fromaddr,
-                  currency: Currency
-                 },
-                 fields: ['totalSupply']
-               }
-            var totSup= await app.model.Token.findOne(option1); 
+        //     let option1 = {
+        //         condition: {
+        //           dappOwner: fromaddr,
+        //           currency: Currency
+        //          },
+        //          fields: ['totalSupply']
+        //        }
+        //     var totSup= await app.model.Token.findOne(option1); 
          
-        app.sdb.update("token", {totalSupply: totSup.totalSupply-amount}, {dappOwner:fromaddr});
-        app.sdb.update("bal", {balance:Number(x.balance)-amount}, {address:fromaddr});
+        // app.sdb.update("token", {totalSupply: totSup.totalSupply-amount}, {dappOwner:fromaddr});
+        app.sdb.update("bal", {balance:x.balance-amount}, {address:fromaddr});
 
     }
 
