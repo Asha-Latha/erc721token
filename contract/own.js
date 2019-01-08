@@ -218,9 +218,9 @@ module.exports = {
             if (!condition) throw Error(error)
           }
 
-        var row = await app.model.Token.findOne({fields:['dappOwner']});
-        console.log("Got object: " + JSON.stringify(row));
-        require(row !== this.trs.senderID, 'Only the DApp owner can mint tokens')
+        // var row = await app.model.Token.findOne({fields:['dappOwner']});
+        // console.log("Got object: " + JSON.stringify(row));
+        // require(row !== this.trs.senderId, 'Only the DApp owner can mint tokens')
 
        let option = {
         condition: {
@@ -233,16 +233,16 @@ module.exports = {
         require(x!== undefined, 'To address does not exist')
         app.sdb.update("bal",{balance: Number(x.balance) - -amount}, {address:toaddr});
 
-        let option1 = {
-            condition: {
-              dappOwner: toaddr,
-              currency: Currency
-             },
-             fields: ['totalSupply']
-           }
-        var tot= await app.model.Token.findOne(option1); 
+    //     let option1 = {
+    //         condition: {
+    //           dappOwner: toaddr,
+    //           currency: Currency
+    //          },
+    //          fields: ['totalSupply']
+    //        }
+    //     var tot= await app.model.Token.findOne(option1); 
      
-       app.sdb.update("token",{totalSupply:tot + amount}, {dappOwner:toaddr});
+    //    app.sdb.update("token",{totalSupply:tot + amount}, {dappOwner:toaddr});
        
     },
 
