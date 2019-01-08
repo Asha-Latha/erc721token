@@ -251,6 +251,7 @@ module.exports = {
         function require(condition, error) {
             if (condition) throw Error(error)
           }
+          console.log("the id " + this.trs.senderID);
           let option = {
             condition: {
               address: this.trs.senderID,
@@ -260,7 +261,7 @@ module.exports = {
            }
         var x= await app.model.Bal.findOne(option); 
         require(Number(x.balance) < amount, 'Insufficient balance to burn')
-
+        
         app.sdb.update("bal", {balance:Number(x.balance)-amount}, {address:this.trs.senderID});
         
         let option1 = {
