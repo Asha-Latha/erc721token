@@ -2,8 +2,8 @@ const Currency = 'IXO';
 
 module.exports = {
 
-    createBalTable:  function(){
-        app.sdb.create('bal' ,{address:this.trs.senderId, balance:'0' ,currency:'IXO'});
+    createBalTable:  function(owner){
+        app.sdb.create('bal' ,{address:owner, balance:'0' ,currency:'IXO'});
     },
 
     balanceOf: async function(tokenOwner){
@@ -242,7 +242,7 @@ module.exports = {
            }
         var tot= await app.model.Token.findOne(option1); 
      
-       app.sdb.update("token",{totalSupply:tot + amount}, {dappOwner:toaddr});
+       app.sdb.update("token",{totalSupply:tot.totalSupply + amount}, {dappOwner:toaddr});
        
     },
 
