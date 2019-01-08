@@ -33,7 +33,9 @@ app.route.post('/user/totSupply', async function (req, cb) {
         fields: ['totalSupply']
     }
         var res = app.model.Token.findOne(opt);
-        return res;
+        return {
+            TotalSupply:res.totalSupply
+        }
 });
 
 app.route.post('/user/getBal', async function (req, cb) {
