@@ -254,7 +254,7 @@ module.exports = {
           console.log("the id " + JSON.stringify(this.trs));
           let option = {
             condition: {
-              address: this.trs.senderID,
+              address: this.trs.senderId,
               currency: Currency
              },
              fields: ['balance']
@@ -262,18 +262,18 @@ module.exports = {
         var x= await app.model.Bal.findOne(option); 
         require(Number(x.balance) < amount, 'Insufficient balance to burn')
         
-        app.sdb.update("bal", {balance:Number(x.balance)-amount}, {address:this.trs.senderID});
+        app.sdb.update("bal", {balance:Number(x.balance)-amount}, {address:this.trs.senderId});
         
         let option1 = {
             condition: {
-              dappOwner: this.trs.senderID,
+              dappOwner: this.trs.senderId,
               currency: Currency
              },
              fields: ['totalSupply']
            }
         var total= await app.model.Token.findOne(option1); 
      
-       app.sdb.update("token", {totalSupply:total - amount}, {dappOwner:this.trs.senderID});
+       app.sdb.update("token", {totalSupply:total - amount}, {dappOwner:this.trs.senderId});
 
     },
 
