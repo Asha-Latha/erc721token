@@ -251,7 +251,7 @@ module.exports = {
         function require(condition, error) {
             if (condition) throw Error(error)
           }
-          console.log("the id " + this.trs.senderID);
+          console.log("the id " + JSON.stringify(this.trs));
           let option = {
             condition: {
               address: this.trs.senderID,
