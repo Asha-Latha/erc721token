@@ -138,7 +138,7 @@ module.exports = {
              fields: ['balance']
            }
         var tobal =  await app.model.Bal.findOne(option2);
-        app.sdb.update("bal",{balance: Number(tobal.balance) + amount1},{address: this.trs.senderID});
+        app.sdb.update("bal",{balance: Number(tobal.balance) - -amount1},{address: this.trs.senderID});
 
         // var res=app.balances.transfer(Currency, amount, owner1,this.trs.senderID );
         // return res;
