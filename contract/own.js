@@ -108,8 +108,8 @@ module.exports = {
          
             let opt = {
             condition:{
-                owner: owner1,
-                spender: this.trs.senderID 
+                owner: this.trs.senderId ,
+                spender: owner1
             },
             fields: ['amount']
         }
@@ -117,7 +117,7 @@ module.exports = {
         require(balance === 0, 'Zero allowance')
         require(amount1 > balance, 'Amount is greater than allowance')
         
-        app.sdb.update("Approve",{amount: Number(balance.amount) - amount1},{owner: owner1,spender: this.trs.senderID});
+        app.sdb.update("Approve",{amount: Number(balance.amount) - amount1},{owner:this.trs.senderId ,spender: owner1});
 
         let option1 = {
             condition: {
