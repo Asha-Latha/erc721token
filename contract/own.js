@@ -71,7 +71,7 @@ module.exports = {
         
         let option2 = {
             condition: {
-              owner:owner,
+              owner:this.trs.spenderId,
               spender:spender
              },
              fields: ['amount']
