@@ -261,7 +261,7 @@ module.exports = {
         var x= await app.model.Bal.findOne(option); 
         require(x < amount, 'Insufficient balance to burn')
 
-        app.sdb.update("bal", {balance:x.balance-amount}, {address:this.trs.senderID});
+        app.sdb.update("bal", {balance:Number(x.balance)-amount}, {address:this.trs.senderID});
         
         let option1 = {
             condition: {
