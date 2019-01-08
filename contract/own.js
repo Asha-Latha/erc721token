@@ -220,7 +220,7 @@ module.exports = {
 
         var row = await app.model.Token.findOne({fields:['dappOwner']});
         console.log("Got object: " + JSON.stringify(row));
-        require(row !== this.trs.senderID, 'Only the DApp owner can mint tokens')
+        //require(row !== this.trs.senderID, 'Only the DApp owner can mint tokens')
 
        let option = {
         condition: {
