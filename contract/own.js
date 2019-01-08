@@ -50,8 +50,8 @@ module.exports = {
         require(tobal == undefined, 'Receiver address not found')
         require((frombal) < amount, 'Insufficient balance in senders address')
 
-        app.sdb.update("bal",{balance:frombal.balance - amount},{address: fromaddr});
-        app.sdb.update("bal",{balance:tobal.balance + amount},{address: toaddr});
+        app.sdb.update("bal",{balance:Number(frombal.balance) - amount},{address: fromaddr});
+        app.sdb.update("bal",{balance:Number(tobal.balance) - -amount},{address: toaddr});
         //app.balances.transfer(Currency, amount, fromaddr, toaddr);
     },
     
@@ -117,7 +117,7 @@ module.exports = {
         require(balance === 0, 'Zero allowance')
         require(amount1 > balance, 'Amount is greater than allowance')
         
-        app.sdb.update("Approve",{amount: balance - amount1},{owner: owner1,spender: this.trs.senderID});
+        app.sdb.update("Approve",{amount: Number(balance.amount) - amount1},{owner: owner1,spender: this.trs.senderID});
 
         let option1 = {
             condition: {
@@ -128,7 +128,7 @@ module.exports = {
            }
         var frombal =  await app.model.Bal.findOne(option1);
  
-        app.sdb.update("bal",{balance: frombal - amount1},{address: owner1});
+        app.sdb.update("bal",{balance: Number(frombal.balance) - amount1},{address: owner1});
 
         let option2 = {
             condition: {
@@ -138,7 +138,7 @@ module.exports = {
              fields: ['balance']
            }
         var tobal =  await app.model.Bal.findOne(option2);
-        app.sdb.update("bal",{balance: tobal + amount1},{address: this.trs.senderID});
+        app.sdb.update("bal",{balance: Number(tobal.balance) + amount1},{address: this.trs.senderID});
 
         // var res=app.balances.transfer(Currency, amount, owner1,this.trs.senderID );
         // return res;
