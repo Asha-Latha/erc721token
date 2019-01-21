@@ -29,6 +29,7 @@ app.registerContract(4004,'own.burn')
 app.registerContract(4005,'own.burnFrom')
 app.registerContract(4006,'own.generateOneTimeDappAddress')
 app.registerContract(4007,'own.createBalTable')
+app.registerContract(4011,'own.createBalTable1')
 app.registerContract(4008,'own.allowance')
 app.registerContract(4009,'own.balanceOf')
 app.registerContract(4010,'own.spendAllowance')
@@ -44,6 +45,7 @@ app.registerFee(4007,'0','BEL')
 app.registerFee(4008,'0','BEL')
 app.registerFee(4009,'0','BEL')
 app.registerFee(4010,'0','BEL')
+app.registerFee(4011,'0','BEL')
 
 
 

@@ -5,6 +5,9 @@ module.exports = {
     createBalTable:  function(superAdmin){
         app.sdb.create('bal' ,{address:superAdmin, balance:'0' ,currency:'IXO'});
     },
+    createBalTable1:  function(){
+        app.sdb.create('bal' ,{address:this.trs.senderId, balance:'0' ,currency:'IXO'});
+    },
 
     balanceOf: async function(tokenOwner){
         var Currency='IXO';
@@ -55,9 +58,29 @@ module.exports = {
         //app.balances.transfer(Currency, amount, fromaddr, toaddr);
     },
     
-    // transfer: async function(address, amount){
-    //     return this.transferFrom(this.trs.senderID, address, amount);  // Called the transferFrom function for code reusability 
-    // },                                                                 // assuming that transaction fees won't incur when a contract is 
+    transfer: async function(address, amount){
+        let option = {
+            condition: {
+              address: this.trs.senderId,
+              currency: Currency
+             },
+             fields: ['balance']
+           }
+            var frombal= await app.model.Bal.findOne(option);
+            
+            let option1 = {
+                condition: {
+                  address: address,
+                  currency: Currency
+                 },
+                 fields: ['balance']
+               }
+            var tobal =  await app.model.Bal.findOne(option1);
+           
+        app.sdb.update("bal",{balance:Number(frombal.balance) - amount},{address: this.trs.senderId});
+        app.sdb.update("bal",{balance:Number(tobal.balance) - -amount},{address: toaddr});
+        // return this.transferFrom(this.trs.senderID, address, amount);  // Called the transferFrom function for code reusability 
+    },                                                                 // assuming that transaction fees won't incur when a contract is 
                                                                         // called from another function.
                                                                         // I think that transaction fees incur only when a contract is called
                                                                         // with /transactions/unsigned type: 1000 
@@ -254,7 +277,7 @@ module.exports = {
           }
           let option = {
             condition: {
-              address: this.trs.senderID,
+              address: this.trs.senderId,
               currency: Currency
              },
              fields: ['balance']
@@ -262,7 +285,7 @@ module.exports = {
         var x= await app.model.Bal.findOne(option); 
         require(Number(x.balance) < amount, 'Insufficient balance to burn')
 
-        app.sdb.update("bal", {balance:Number(x.balance)-amount}, {address:this.trs.senderID});
+        app.sdb.update("bal", {balance:Number(x.balance)-amount}, {address:this.trs.senderId});
         
     //     let option1 = {
     //         condition: {
