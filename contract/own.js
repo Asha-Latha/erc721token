@@ -108,7 +108,7 @@ module.exports = {
         require(row !== undefined, 'does not exist')
         // if(!row.amount){
             app.sdb.create("approve", {
-                owner: this.trs.senderID,
+                owner: this.trs.senderId,
                 spender: spender,
                 amount: amount
             });
