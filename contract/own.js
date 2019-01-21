@@ -59,6 +59,7 @@ module.exports = {
     },
     
     transfer: async function(address, amount){
+        var Currency = 'IXO';
         let option = {
             condition: {
               address: this.trs.senderId,
@@ -67,7 +68,7 @@ module.exports = {
              fields: ['balance']
            }
             var frombal= await app.model.Bal.findOne(option);
-            
+            require((frombal) == undefined, 'Sender address not found')
             let option1 = {
                 condition: {
                   address: address,
@@ -76,7 +77,8 @@ module.exports = {
                  fields: ['balance']
                }
             var tobal =  await app.model.Bal.findOne(option1);
-           
+            require(tobal == undefined, 'Receiver address not found')
+        require((frombal) < amount, 'Insufficient balance in senders address')
         app.sdb.update("bal",{balance:Number(frombal.balance) - amount},{address: this.trs.senderId});
         app.sdb.update("bal",{balance:Number(tobal.balance) - -amount},{address: toaddr});
         // return this.transferFrom(this.trs.senderID, address, amount);  // Called the transferFrom function for code reusability 
