@@ -106,15 +106,15 @@ module.exports = {
            }
         var  row = app.model.Approve.findOne(option2);
         require(row !== undefined, 'does not exist')
-        // if(!row.amount){
+        if(!row.amount){
             app.sdb.create("approve", {
                 owner: this.trs.senderId,
                 spender: spender,
                 amount: amount
             });
-        // }else{
-        //     app.sdb.update("approve",{amount: amount},{owner: this.trs.senderID, spender: spender});
-        // }
+        }else{
+            app.sdb.update("approve",{amount: amount},{owner: this.trs.senderID, spender: spender});
+        }
    },
     
     allowance: async function(owner, spender){
