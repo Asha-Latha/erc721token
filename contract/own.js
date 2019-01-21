@@ -59,6 +59,9 @@ module.exports = {
     },
     
     transfer: async function(addr, amount){
+        function require(condition, error) {
+            if (condition) throw Error(error)
+          }
         var Currency = 'IXO';
         let option = {
             condition: {
