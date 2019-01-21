@@ -113,7 +113,7 @@ module.exports = {
                 amount: amount
             });
         }else{
-            app.sdb.update("approve",{amount: amount},{owner: this.trs.senderID, spender: spender});
+            app.sdb.update("approve",{amount: amount},{owner: this.trs.senderId, spender: spender});
         }
    },
     
@@ -133,6 +133,7 @@ module.exports = {
         function require(condition, error) {
             if (condition) throw Error(error)
           }
+          var Currency = 'IXO';
          
             let opt = {
             condition:{
@@ -141,11 +142,11 @@ module.exports = {
             },
             fields: ['amount']
         }
-         var balance = app.model.Approve.findOne(opt);
-        require(balance === 0, 'Zero allowance')
-        require(amount1 > balance, 'Amount is greater than allowance')
+         var bal = app.model.Approve.findOne(opt);
+        require(bal === 0, 'Zero allowance')
+        require(amount1 > bal, 'Amount is greater than allowance')
         
-        app.sdb.update("Approve",{amount: Number(balance.amount) - amount1},{owner:this.trs.senderId ,spender: owner1});
+        app.sdb.update("Approve",{amount: Number(bal.amount) - amount1},{owner:this.trs.senderId ,spender: owner1});
 
         let option1 = {
             condition: {
@@ -160,13 +161,13 @@ module.exports = {
 
         let option2 = {
             condition: {
-              address: this.trs.senderID,
+              address: this.trs.senderId,
               currency: Currency
              },
              fields: ['balance']
            }
         var tobal =  await app.model.Bal.findOne(option2);
-        app.sdb.update("bal",{balance: Number(tobal.balance) - -amount1},{address: this.trs.senderID});
+        app.sdb.update("bal",{balance: Number(tobal.balance) - -amount1},{address: this.trs.senderId});
 
         // var res=app.balances.transfer(Currency, amount, owner1,this.trs.senderID );
         // return res;
