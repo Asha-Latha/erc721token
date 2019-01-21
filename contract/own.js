@@ -240,9 +240,10 @@ module.exports = {
              },
              fields: ['totalSupply']
            }
-        var tot= await app.model.Token.findOne(option1); 
-     
-       app.sdb.update("token",{totalSupply:Number(tot.totalSupply) - -amount}, {dappOwner:toaddr});
+        var tot= await app.model.Token.findOne(option1);
+        console.log("total supply: " + JSON.stringify(tot)); 
+        require(tot!== undefined, 'To address does not exist')
+       app.sdb.update("token",{totalSupply: Number(tot.totalSupply) - -amount}, {dappOwner:toaddr});
        
     },
 
