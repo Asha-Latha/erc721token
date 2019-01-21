@@ -233,17 +233,17 @@ module.exports = {
         require(x!== undefined, 'To address does not exist')
         app.sdb.update("bal",{balance: Number(x.balance) - -amount}, {address:toaddr});
 
-        let option1 = {
-            condition: {
-              dappOwner: toaddr,
-              currency: Currency
-             },
-             fields: ['totalSupply']
-           }
-        var tot= await app.model.Token.findOne(option1);
-        console.log("total supply: " + JSON.stringify(tot)); 
-        require(tot!== undefined, 'To address does not exist')
-       app.sdb.update("token",{totalSupply: Number(tot.totalSupply) - -amount}, {dappOwner:toaddr});
+    //     let option1 = {
+    //         condition: {
+    //           dappOwner: toaddr,
+    //           currency: Currency
+    //          },
+    //          fields: ['totalSupply']
+    //        }
+    //     var tot= await app.model.Token.findOne(option1);
+    //     console.log("total supply: " + JSON.stringify(tot)); 
+    //     require(tot!== undefined, 'To address does not exist')
+    //    app.sdb.update("token",{totalSupply: Number(tot.totalSupply) - -amount}, {dappOwner:toaddr});
        
     },
 
@@ -291,16 +291,16 @@ module.exports = {
                }
             var x= await app.model.Bal.findOne(option); 
             require(x < amount, 'Insufficient balance to burn')
-            let option1 = {
-                condition: {
-                  dappOwner: fromaddr,
-                  currency: Currency
-                 },
-                 fields: ['totalSupply']
-               }
-            var totSup= await app.model.Token.findOne(option1); 
+        //     let option1 = {
+        //         condition: {
+        //           dappOwner: fromaddr,
+        //           currency: Currency
+        //          },
+        //          fields: ['totalSupply']
+        //        }
+        //     var totSup= await app.model.Token.findOne(option1); 
          
-        app.sdb.update("token", {totalSupply: totSup.totalSupply-amount}, {dappOwner:fromaddr});
+        // app.sdb.update("token", {totalSupply: totSup.totalSupply-amount}, {dappOwner:fromaddr});
         app.sdb.update("bal", {balance:x.balance-amount}, {address:fromaddr});
 
     }
