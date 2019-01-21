@@ -20,19 +20,19 @@ app.route.post('/user/bal1', async function (req, cb) {
 });
 
 
-app.route.post('/user/totSupply', async function (req, cb) {
+app.route.post('/user/getTotSupply', async function (req, cb) {
     var params = {
-        owner:req.query.owner,
-        Currency: req.query.Currency,
+        owner:req.query.owner
+        // Currency: req.query.Currency,
     };
-    let opt = {
+    let opt1 = {
         condition:{
-            dappOwner:owner,
-            currency:Currency
+            dappOwner:params.owner
+            // currency:Currency
         },
         fields: ['totalSupply']
     }
-        var res = app.model.Token.findOne(opt);
+        var res = app.model.Token.findOne(opt1);
         return {
             TotalSupply:res.totalSupply
         }
