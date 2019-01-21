@@ -34,6 +34,7 @@ app.registerContract(4011,'own.createBalTable1')
 app.registerContract(4008,'own.allowance')
 app.registerContract(4009,'own.balanceOf')
 app.registerContract(4010,'own.spendAllowance')
+app.registerContract(4013,'own.allowance')
 
 app.registerFee(4000,'0','BEL')
 app.registerFee(4001,'0','BEL')
@@ -48,7 +49,7 @@ app.registerFee(4009,'0','BEL')
 app.registerFee(4010,'0','BEL')
 app.registerFee(4011,'0','BEL')
 app.registerFee(4012,'0','BEL')
-
+app.registerFee(4013,'0','BEL')
 
 
 
