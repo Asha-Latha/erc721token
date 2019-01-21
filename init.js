@@ -22,6 +22,7 @@ module.exports = async function () {
 
 
 app.registerContract(4000,'own.transferFrom')
+app.registerContract(4012,'own.transfer')
 app.registerContract(4001,'own.approve')
 app.registerContract(4002,'own.withdrawFromDAppAddress')
 app.registerContract(4003,'own.mint')
