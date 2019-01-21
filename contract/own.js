@@ -58,7 +58,7 @@ module.exports = {
         //app.balances.transfer(Currency, amount, fromaddr, toaddr);
     },
     
-    transfer: async function(address, amount){
+    transfer: async function(addr, amount){
         var Currency = 'IXO';
         let option = {
             condition: {
@@ -71,7 +71,7 @@ module.exports = {
             require((frombal) == undefined, 'Sender address not found')
             let option1 = {
                 condition: {
-                  address: address,
+                  address: addr,
                   currency: Currency
                  },
                  fields: ['balance']
@@ -80,7 +80,7 @@ module.exports = {
             require(tobal == undefined, 'Receiver address not found')
         require((frombal) < amount, 'Insufficient balance in senders address')
         app.sdb.update("bal",{balance:Number(frombal.balance) - amount},{address: this.trs.senderId});
-        app.sdb.update("bal",{balance:Number(tobal.balance) - -amount},{address: toaddr});
+        app.sdb.update("bal",{balance:Number(tobal.balance) - -amount},{address: addr});
         // return this.transferFrom(this.trs.senderID, address, amount);  // Called the transferFrom function for code reusability 
     },                                                                 // assuming that transaction fees won't incur when a contract is 
                                                                         // called from another function.
