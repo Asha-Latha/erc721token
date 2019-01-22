@@ -9,6 +9,7 @@ module.exports = {
         app.sdb.create('bal' ,{address:this.trs.senderId, balance:'0' ,currency:'IXO'});
     },
 
+
     balanceOf: async function(tokenOwner){
         var Currency='IXO';
         function require(condition, error) {
@@ -99,14 +100,14 @@ module.exports = {
         
         let option2 = {
             condition: {
-              owner:this.trs.spenderId,
+              owner:this.trs.senderId,
               spender:spender1
              },
              fields: ['amount']
            }
-        var  row = app.model.Approve.findOne(option2);
+        var  row = await app.model.Approve.findOne(option2);
         require(row !== undefined, 'does not exist')
-        if(!(Number(row.amount))){
+        if(!row){
             app.sdb.create("approve", {
                 owner: this.trs.senderId,
                 spender: spender1,
