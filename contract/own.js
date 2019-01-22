@@ -27,36 +27,74 @@ module.exports = {
             return b.balance;
     },
     
-    transferFrom: async function(fromaddr, toaddr, amount){
-        function require(condition, error) {
-            if (condition) throw Error(error)
-          }
+    // transferFrom: async function(fromaddr, toaddr, amount){
+    //     function require(condition, error) {
+    //         if (condition) throw Error(error)
+    //       }
 
-        var Currency = 'IXO';
+    //     var Currency = 'IXO';
 
-        let option = {
-        condition: {
-          address: fromaddr,
-          currency: Currency
-         },
-         fields: ['balance']
-       }
-        var frombal= await app.model.Bal.findOne(option);
-        require((frombal) == undefined, 'Sender address not found')
-        let option1 = {
-            condition: {
-              address: toaddr,
-              currency: Currency
-             },
-             fields: ['balance']
-           }
-        var tobal =  await app.model.Bal.findOne(option1);
-        require(tobal == undefined, 'Receiver address not found')
-        require((frombal) < amount, 'Insufficient balance in senders address')
+    //     let option = {
+    //     condition: {
+    //       address: fromaddr,
+    //       currency: Currency
+    //      },
+    //      fields: ['balance']
+    //    }
+    //     var frombal= await app.model.Bal.findOne(option);
+    //     require((frombal) == undefined, 'Sender address not found')
+    //     let option1 = {
+    //         condition: {
+    //           address: toaddr,
+    //           currency: Currency
+    //          },
+    //          fields: ['balance']
+    //        }
+    //     var tobal =  await app.model.Bal.findOne(option1);
+    //     require(tobal == undefined, 'Receiver address not found')
+    //     require((frombal) < amount, 'Insufficient balance in senders address')
 
-        app.sdb.update("bal",{balance:Number(frombal.balance) - amount},{address: fromaddr});
-        app.sdb.update("bal",{balance:Number(tobal.balance) - -amount},{address: toaddr});
-        //app.balances.transfer(Currency, amount, fromaddr, toaddr);
+    //     app.sdb.update("bal",{balance:Number(frombal.balance) - amount},{address: fromaddr});
+    //     app.sdb.update("bal",{balance:Number(tobal.balance) - -amount},{address: toaddr});
+    //     //app.balances.transfer(Currency, amount, fromaddr, toaddr);
+    // },
+
+    transferFrom: async function(fromaddr, toaddr, x){ 
+            var row =await app.model.Approve.findOne({
+                condition:{
+                    owner: fromaddr,
+                    spender: this.trs.senderId
+                },
+                fields: ['amount']
+            });
+            if(!row){
+               return false;
+            }
+            else{
+             var frombal= await app.model.Bal.findOne({
+             condition: {
+                address: fromaddr,
+                currency: Currency
+                  },
+                fields: ['balance']
+                });
+                app.sdb.update("bal",{balance:Number(frombal.balance) - x},{address: fromaddr});
+
+                var tobal = await app.model.Bal.findOne({
+                   condition: {
+                     address: toaddr,
+                     currency: Currency
+                       },
+                    fields: ['balance']
+                     });
+              app.sdb.update("bal",{balance:Number(tobal.balance) - -x},{address: toaddr});    
+
+
+              
+              app.sdb.update("approve",{amount: Number(row.amount)-x},{owner: fromaddr, spender: this.trs.senderId});
+              
+            }
+
     },
     
     transfer: async function(addr, amount){
@@ -108,7 +146,7 @@ module.exports = {
         var  row = await app.model.Approve.findOne(option2);
         require(row !== undefined, 'does not exist')
         if(!row){
-            app.sdb.create("approve", {
+            app.sdb.create("approve", { 
                 owner: this.trs.senderId,
                 spender: spender1,
                 amount: amount
