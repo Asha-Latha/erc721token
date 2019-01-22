@@ -148,26 +148,26 @@ module.exports = {
         
         app.sdb.update("Approve",{amount: Number(bal.amount) - amount1},{owner:this.trs.senderId ,spender: owner1});
 
-        let option1 = {
-            condition: {
-              address: owner1,
-              currency: Currency
-             },
-             fields: ['balance']
-           }
-        var frombal =  await app.model.Bal.findOne(option1);
+        // let option1 = {
+        //     condition: {
+        //       address: owner1,
+        //       currency: Currency
+        //      },
+        //      fields: ['balance']
+        //    }
+        // var frombal =  await app.model.Bal.findOne(option1);
  
-        app.sdb.update("bal",{balance: Number(frombal.balance) - amount1},{address: owner1});
+        // app.sdb.update("bal",{balance: Number(frombal.balance) - amount1},{address: owner1});
 
-        let option2 = {
-            condition: {
-              address: this.trs.senderId,
-              currency: Currency
-             },
-             fields: ['balance']
-           }
-        var tobal =  await app.model.Bal.findOne(option2);
-        app.sdb.update("bal",{balance: Number(tobal.balance) - -amount1},{address: this.trs.senderId});
+        // let option2 = {
+        //     condition: {
+        //       address: this.trs.senderId,
+        //       currency: Currency
+        //      },
+        //      fields: ['balance']
+        //    }
+        // var tobal =  await app.model.Bal.findOne(option2);
+        // app.sdb.update("bal",{balance: Number(tobal.balance) - -amount1},{address: this.trs.senderId});
 
         // var res=app.balances.transfer(Currency, amount, owner1,this.trs.senderID );
         // return res;
