@@ -130,9 +130,9 @@ module.exports = {
     },
 
     spendAllowance: async function(owner1, amount1){
-        function require(condition, error) {
-            if (condition) throw Error(error)
-          }
+        // function require(condition, error) {
+        //     if (condition) throw Error(error)
+        //   }
           var Currency = 'IXO';
          
             let opt = {
@@ -143,8 +143,8 @@ module.exports = {
             fields: ['amount']
         }
          var bal = app.model.Approve.findOne(opt);
-        require(bal === 0, 'Zero allowance')
-        require(amount1 > bal, 'Amount is greater than allowance')
+        // require(bal === 0, 'Zero allowance')
+        // require(amount1 > bal, 'Amount is greater than allowance')
         
         app.sdb.update("Approve",{amount: Number(bal.amount) - amount1},{owner:this.trs.senderId ,spender: owner1});
 
