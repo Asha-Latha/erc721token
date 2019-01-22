@@ -88,11 +88,8 @@ module.exports = {
                     fields: ['balance']
                      });
               app.sdb.update("bal",{balance:Number(tobal.balance) - -x},{address: toaddr});    
-
-
-              
               app.sdb.update("approve",{amount: Number(row.amount)-x},{owner: fromaddr, spender: this.trs.senderId});
-              
+        
             }
 
     },
