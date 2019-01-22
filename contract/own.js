@@ -106,7 +106,7 @@ module.exports = {
            }
         var  row = app.model.Approve.findOne(option2);
         require(row !== undefined, 'does not exist')
-        if(!row.amount){
+        if(!(Number(row.amount))){
             app.sdb.create("approve", {
                 owner: this.trs.senderId,
                 spender: spender,
