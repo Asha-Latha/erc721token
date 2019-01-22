@@ -90,17 +90,17 @@ module.exports = {
                                                                         // I think that transaction fees incur only when a contract is called
                                                                         // with /transactions/unsigned type: 1000 
                                                                         // Will change it if that's not how it works.
-    approve: async function(spender, amount){
+    approve: async function(spender1, amount){
         function require(condition, error) {
             if (!condition) throw Error(error)
           }
-        var row = await app.model.Bal.findOne({Address: spender});
+        var row = await app.model.Bal.findOne({Address: spender1});
         require(row !== undefined, 'Spender address not found')
         
         let option2 = {
             condition: {
               owner:this.trs.spenderId,
-              spender:spender
+              spender:spender1
              },
              fields: ['amount']
            }
@@ -109,11 +109,11 @@ module.exports = {
         if(!(Number(row.amount))){
             app.sdb.create("approve", {
                 owner: this.trs.senderId,
-                spender: spender,
+                spender: spender1,
                 amount: amount
             });
         }else{
-            app.sdb.update("approve",{amount: amount},{owner: this.trs.senderId, spender: spender});
+            app.sdb.update("approve",{amount: amount},{owner: this.trs.senderId, spender: spender1});
         }
    },
     
