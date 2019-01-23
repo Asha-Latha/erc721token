@@ -12,19 +12,17 @@ module.exports = {
 
     balanceOf: async function(tokenOwner){
         var Currency='IXO';
-        function require(condition, error) {
-            if (!condition) throw Error(error)
-          }
-        let option = {
-            condition: {
-              address: tokenOwner,
-              currency: Currency
-             },
-             fields: ['balance']
+        var b= await app.model.Bal.findOne({
+                condition: {
+                  address: tokenOwner,
+                  currency: Currency
+                 },
+                 fields: ['balance']
+               });
+           if(!b){
+               return "address not found";
            }
-            var b= await app.model.Bal.findOne(option);
-            require(b.balance !== undefined, 'address not found')
-            return b.balance;
+            return Number(b.balance);
     },
     
     // transferFrom: async function(fromaddr, toaddr, amount){
@@ -61,11 +59,8 @@ module.exports = {
 
     transferFrom: async function(fromaddr, toaddr, x){ 
         var Currency='IXO';
-        function require(condition, error) {
-                    if (condition) throw Error(error)
-                  }
 
-                  console.log("From address: " + fromaddr + " To address: " + toaddr);
+            console.log("From address: " + fromaddr + " To address: " + toaddr);
 
             var row =await app.model.Approval.findOne({
                 condition:{
@@ -112,29 +107,33 @@ module.exports = {
     },
     
     transfer: async function(addr, amount){
-        function require(condition, error) {
-            if (condition) throw Error(error)
-          }
         var Currency = 'IXO';
-        let option = {
-            condition: {
-              address: this.trs.senderId,
-              currency: Currency
-             },
-             fields: ['balance']
-           }
-            var frombal= await app.model.Bal.findOne(option);
-            require((frombal) == undefined, 'Sender address not found')
-            let option1 = {
+        var frombal= await app.model.Bal.findOne({
+                condition: {
+                  address: this.trs.senderId,
+                  currency: Currency
+                 },
+                 fields: ['balance']
+               });
+               if(!frombal){
+                   return "Sender address not found";
+               }
+            
+            var tobal =  await app.model.Bal.findOne( {
                 condition: {
                   address: addr,
                   currency: Currency
                  },
                  fields: ['balance']
+               });
+               if(!tobal){
+                   return "Receiver address not found";
                }
-            var tobal =  await app.model.Bal.findOne(option1);
-            require(tobal == undefined, 'Receiver address not found')
-        require((frombal) < amount, 'Insufficient balance in senders address')
+
+               if(Number(frombal.balance) < amount){
+                   return "Insufficient balance in senders address";
+               }
+    
         app.sdb.update("bal",{balance:Number(frombal.balance) - amount},{address: this.trs.senderId});
         app.sdb.update("bal",{balance:Number(tobal.balance) - -amount},{address: addr});
 
