@@ -77,7 +77,7 @@ module.exports = {
             if(!row){
                return false;
             }
-            if (row){
+            if(row){
              var frombal= await app.model.Bal.findOne({
              condition: {
                 address: fromaddr,
@@ -85,7 +85,7 @@ module.exports = {
                   },
                 fields: ['balance']
                 });
-                require((frombal) == undefined, 'Sender address not found')
+                require(frombal == undefined, 'Sender address not found')
                 app.sdb.update("bal",{balance:Number(frombal.balance) - x},{address: fromaddr});
 
                 var tobal = await app.model.Bal.findOne({
