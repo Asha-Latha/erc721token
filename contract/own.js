@@ -77,7 +77,7 @@ module.exports = {
             if(!row){
                return false;
             }
-            if(row){
+            else{
              var frombal= await app.model.Bal.findOne({
              condition: {
                 address: fromaddr,
