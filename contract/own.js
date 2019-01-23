@@ -61,6 +61,9 @@ module.exports = {
 
     transferFrom: async function(fromaddr, toaddr, x){ 
         var Currency='IXO';
+        function require(condition, error) {
+                    if (condition) throw Error(error)
+                  }
 
             var row =await app.model.Approval.findOne({
                 condition:{
@@ -82,6 +85,7 @@ module.exports = {
                   },
                 fields: ['balance']
                 });
+                require((frombal) == undefined, 'Sender address not found')
                 app.sdb.update("bal",{balance:Number(frombal.balance) - x},{address: fromaddr});
 
                 var tobal = await app.model.Bal.findOne({
@@ -91,6 +95,7 @@ module.exports = {
                        },
                     fields: ['balance']
                      });
+                require(tobal == undefined, 'Receiver address not found')
               app.sdb.update("bal",{balance:Number(tobal.balance) - -x},{address: toaddr});    
               app.sdb.update("approval",{amount: Number(row.amount)-x},{owner: fromaddr, spender: this.trs.senderId});
         
