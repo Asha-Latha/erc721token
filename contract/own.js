@@ -98,7 +98,6 @@ module.exports = {
                 require(tobal === undefined, 'Receiver address not found')
               app.sdb.update("bal",{balance:Number(tobal.balance) - -x},{address: toaddr});    
               app.sdb.update("approval",{amount: Number(row.amount)-x},{owner: fromaddr, spender: this.trs.senderId});
-
               app.sdb.create('transfer' ,{fromaddress:fromaddr, toaddress:toaddr ,tokens:x});
         
             }
