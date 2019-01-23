@@ -61,6 +61,7 @@ module.exports = {
 
     transferFrom: async function(fromaddr, toaddr, x){ 
         var Currency='IXO';
+
             var row =await app.model.Approval.findOne({
                 condition:{
                     owner: fromaddr,
@@ -68,6 +69,8 @@ module.exports = {
                 },
                 fields: ['amount']
             });
+            console.log("Got object: " + JSON.stringify(row));
+
             if(!row){
                return false;
             }
