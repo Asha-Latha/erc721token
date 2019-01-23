@@ -75,7 +75,7 @@ module.exports = {
             console.log("Got object: " + JSON.stringify(row));
 
             if(!row){
-               return false;
+               break;
             }
             if(row){
              var frombal= await app.model.Bal.findOne({
