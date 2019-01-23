@@ -87,9 +87,12 @@ module.exports = {
                   },
                 fields: ['balance']
                 });
-                require(frombal === undefined, 'Sender address not found')
+                
+                if(!frombal){
+                    return "invalid Sender address!";
+                 }
                 app.sdb.update("bal",{balance:Number(frombal.balance) - x},{address: fromaddr});
-
+ 
                 var tobal = await app.model.Bal.findOne({
                    condition: {
                      address: toaddr,
@@ -97,7 +100,9 @@ module.exports = {
                        },
                     fields: ['balance']
                      });
-                require(tobal === undefined, 'Receiver address not found')
+                     if(!tobal){
+                        return "invalid receiver's address!";
+                     }
               app.sdb.update("bal",{balance:Number(tobal.balance) - -x},{address: toaddr});    
               app.sdb.update("approval",{amount: Number(row.amount)-x},{owner: fromaddr, spender: this.trs.senderId});
               app.sdb.create('tran' ,{fromaddress:fromaddr, toaddress:toaddr ,tokens:x});
