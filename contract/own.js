@@ -61,7 +61,7 @@ module.exports = {
 
     transferFrom: async function(fromaddr, toaddr, x){ 
         var Currency='IXO';
-            var row =await app.model.Approve.findOne({
+            var row =await app.model.Approval.findOne({
                 condition:{
                     owner: fromaddr,
                     spender: this.trs.senderId
@@ -89,7 +89,7 @@ module.exports = {
                     fields: ['balance']
                      });
               app.sdb.update("bal",{balance:Number(tobal.balance) - -x},{address: toaddr});    
-              app.sdb.update("approve",{amount: Number(row.amount)-x},{owner: fromaddr, spender: this.trs.senderId});
+              app.sdb.update("approval",{amount: Number(row.amount)-x},{owner: fromaddr, spender: this.trs.senderId});
         
             }
 
@@ -141,16 +141,16 @@ module.exports = {
              },
              fields: ['amount']
            }
-        var  row = await app.model.Approve.findOne(option2);
+        var  row = await app.model.Approval.findOne(option2);
         require(row !== undefined, 'does not exist')
         if(!row){
-            app.sdb.create("approve", { 
+            app.sdb.create("approval", { 
                 owner: spender1,
                 spender: this.trs.senderId,
                 amount: amount1
             });
         }else{
-            app.sdb.update("approve",{amount: amount1},{owner: spender1, spender: this.trs.senderId});
+            app.sdb.update("approval",{amount: amount1},{owner: spender1, spender: this.trs.senderId});
         }
    },
     
@@ -162,7 +162,7 @@ module.exports = {
         },
         fields: ['amount']
     }
-        var row = app.model.Approve.findOne(opt);
+        var row = app.model.Approval.findOne(opt);
         return row.amount;
     },
 
@@ -179,11 +179,11 @@ module.exports = {
             },
             fields: ['amount']
         }
-         var bal = app.model.Approve.findOne(opt);
+         var bal = app.model.Approval.findOne(opt);
         // require(bal === 0, 'Zero allowance')
         // require(amount1 > bal, 'Amount is greater than allowance')
         
-        app.sdb.update("Approve",{amount: Number(bal.amount) - amount1},{owner:this.trs.senderId ,spender: owner1});
+        app.sdb.update("approval",{amount: Number(bal.amount) - amount1},{owner:this.trs.senderId ,spender: owner1});
 
         // let option1 = {
         //     condition: {

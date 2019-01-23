@@ -1,5 +1,5 @@
 module.exports = {
-    name: 'approves',
+    name: 'approvals',
     fields: [
       {
         name: 'owner',
