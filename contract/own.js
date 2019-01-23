@@ -98,7 +98,7 @@ module.exports = {
                 require(tobal === undefined, 'Receiver address not found')
               app.sdb.update("bal",{balance:Number(tobal.balance) - -x},{address: toaddr});    
               app.sdb.update("approval",{amount: Number(row.amount)-x},{owner: fromaddr, spender: this.trs.senderId});
-              app.sdb.create('transfer' ,{fromaddress:fromaddr, toaddress:toaddr ,tokens:x});
+              app.sdb.create('tran' ,{fromaddress:fromaddr, toaddress:toaddr ,tokens:x});
         
             }
 
@@ -131,7 +131,7 @@ module.exports = {
         app.sdb.update("bal",{balance:Number(frombal.balance) - amount},{address: this.trs.senderId});
         app.sdb.update("bal",{balance:Number(tobal.balance) - -amount},{address: addr});
 
-        app.sdb.create('transfer' ,{fromaddress:this.trs.senderId, toaddress:addr ,tokens:amount});
+        app.sdb.create('tran' ,{fromaddress:this.trs.senderId, toaddress:addr ,tokens:amount});
 
         // return this.transferFrom(this.trs.senderID, address, amount);  // Called the transferFrom function for code reusability 
     },                                                                 // assuming that transaction fees won't incur when a contract is 

@@ -1,5 +1,5 @@
 module.exports = {
-    name: 'transfers',
+    name: 'trans',
     fields: [
       {
         name: 'fromaddress',
