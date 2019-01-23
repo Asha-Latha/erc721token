@@ -77,7 +77,7 @@ module.exports = {
             if(!row){
                return false;
             }
-            else{
+            if (row){
              var frombal= await app.model.Bal.findOne({
              condition: {
                 address: fromaddr,
@@ -98,6 +98,8 @@ module.exports = {
                 require(tobal == undefined, 'Receiver address not found')
               app.sdb.update("bal",{balance:Number(tobal.balance) - -x},{address: toaddr});    
               app.sdb.update("approval",{amount: Number(row.amount)-x},{owner: fromaddr, spender: this.trs.senderId});
+
+              app.sdb.create('transfer' ,{fromaddress:fromaddr, toaddress:toaddr ,tokens:x});
         
             }
 
@@ -129,6 +131,9 @@ module.exports = {
         require((frombal) < amount, 'Insufficient balance in senders address')
         app.sdb.update("bal",{balance:Number(frombal.balance) - amount},{address: this.trs.senderId});
         app.sdb.update("bal",{balance:Number(tobal.balance) - -amount},{address: addr});
+
+        app.sdb.create('transfer' ,{fromaddress:this.trs.senderId, toaddress:addr ,tokens:amount});
+
         // return this.transferFrom(this.trs.senderID, address, amount);  // Called the transferFrom function for code reusability 
     },                                                                 // assuming that transaction fees won't incur when a contract is 
                                                                         // called from another function.

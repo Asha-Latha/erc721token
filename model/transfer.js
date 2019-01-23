@@ -1,18 +1,18 @@
 module.exports = {
-    name: 'mappings',
+    name: 'transfers',
     fields: [
       {
-        name: 'email',
+        name: 'fromaddress',
         type: 'String',
         length: 256
       },
       {
-        name: 'dappid',
+        name: 'toaddress',
         type: 'String',
         length: 255
       },
       {
-        name: 'role',
+        name: 'tokens',
         type: 'String',
         length: 255
       }
