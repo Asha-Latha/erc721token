@@ -65,6 +65,8 @@ module.exports = {
                     if (condition) throw Error(error)
                   }
 
+                  console.log("From address: " + fromaddr + " To address: " + toaddr);
+
             var row =await app.model.Approval.findOne({
                 condition:{
                     owner: fromaddr,
