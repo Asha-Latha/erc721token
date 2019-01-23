@@ -77,7 +77,7 @@ module.exports = {
             console.log("Got object: " + JSON.stringify(row));
 
             if(!row){
-               return false;
+               return "invalid approval";
             }
             else{
              var frombal= await app.model.Bal.findOne({
