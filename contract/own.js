@@ -60,6 +60,7 @@ module.exports = {
     // },
 
     transferFrom: async function(fromaddr, toaddr, x){ 
+        var Currency='IXO';
             var row =await app.model.Approve.findOne({
                 condition:{
                     owner: fromaddr,
@@ -126,7 +127,7 @@ module.exports = {
                                                                         // I think that transaction fees incur only when a contract is called
                                                                         // with /transactions/unsigned type: 1000 
                                                                         // Will change it if that's not how it works.
-    approve: async function(spender1, amount){
+    approve: async function(spender1, amount1){
         function require(condition, error) {
             if (!condition) throw Error(error)
           }
@@ -135,8 +136,8 @@ module.exports = {
         
         let option2 = {
             condition: {
-              owner:this.trs.senderId,
-              spender:spender1
+              owner:spender1,
+              spender:this.trs.senderId
              },
              fields: ['amount']
            }
@@ -144,12 +145,12 @@ module.exports = {
         require(row !== undefined, 'does not exist')
         if(!row){
             app.sdb.create("approve", { 
-                owner: this.trs.senderId,
-                spender: spender1,
-                amount: amount
+                owner: spender1,
+                spender: this.trs.senderId,
+                amount: amount1
             });
         }else{
-            app.sdb.update("approve",{amount: amount},{owner: this.trs.senderId, spender: spender1});
+            app.sdb.update("approve",{amount: amount1},{owner: spender1, spender: this.trs.senderId});
         }
    },
     
