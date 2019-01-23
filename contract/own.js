@@ -85,7 +85,7 @@ module.exports = {
                   },
                 fields: ['balance']
                 });
-                require(frombal == undefined, 'Sender address not found')
+                require(frombal === undefined, 'Sender address not found')
                 app.sdb.update("bal",{balance:Number(frombal.balance) - x},{address: fromaddr});
 
                 var tobal = await app.model.Bal.findOne({
@@ -95,7 +95,7 @@ module.exports = {
                        },
                     fields: ['balance']
                      });
-                require(tobal == undefined, 'Receiver address not found')
+                require(tobal === undefined, 'Receiver address not found')
               app.sdb.update("bal",{balance:Number(tobal.balance) - -x},{address: toaddr});    
               app.sdb.update("approval",{amount: Number(row.amount)-x},{owner: fromaddr, spender: this.trs.senderId});
 
