@@ -62,14 +62,14 @@ module.exports = {
 
            // console.log("From address: " + fromaddr + " To address: " + toaddr);
            
-            var spender1 = await app.model.Approval.findOne({
+            var spender1 = await app.model.Approve.findOne({
                 condition:{
                     owner: fromaddr
                 },
                 fields: ['spender']
             });
             console.log("spender address: " + JSON.stringify(spender1));
-            var row =await app.model.Approval.findOne({
+            var row =await app.model.Approve.findOne({
                 condition:{
                     owner: fromaddr,
                     spender: spender1.spender
@@ -79,7 +79,7 @@ module.exports = {
            // console.log("Got object: " + JSON.stringify(row));
 
             if(!row || x > Number(row.amount)){
-               return "invalid approval";
+               return "invalid approve";
             }
             else{
              var frombal= await app.model.Bal.findOne({
@@ -106,7 +106,7 @@ module.exports = {
                         return "invalid receiver's address!";
                      }
               app.sdb.update("bal",{balance:Number(tobal.balance) - -x},{address: toaddr});    
-              app.sdb.update("approval",{amount: Number(row.amount)-x},{owner: fromaddr, spender: spender1.spender});
+              app.sdb.update("approve",{amount: Number(row.amount)-x},{owner: fromaddr, spender: spender1.spender});
               app.sdb.create('tran' ,{fromaddress:fromaddr, toaddress:toaddr ,tokens:x});
         
             }
@@ -154,7 +154,7 @@ module.exports = {
                                                                         // Will change it if that's not how it works.
     approve: async function(spender1, amount1){
         
-        var  row = await app.model.Approval.findOne({
+        var  row = await app.model.Approve.findOne({
             condition: {
               owner:this.trs.senderId,
               spender:spender1
@@ -162,18 +162,24 @@ module.exports = {
              fields: ['amount']
            });
         if(!row){
-            app.sdb.create("approval", { 
+            app.sdb.create("approve", { 
                 owner: this.trs.senderId,
                 spender: spender1,
                 amount: amount1
             });
+            app.sdb.create("approval", { 
+                owner: this.trs.senderId,
+                spender: spender1,
+                value: amount1
+            });
         }else{
-            app.sdb.update("approval",{amount: amount1},{owner: this.trs.senderId, spender: spender1});
+            app.sdb.update("approve",{amount: amount1},{owner: this.trs.senderId, spender: spender1});
+            app.sdb.update("approval",{value: amount1},{owner: this.trs.senderId, spender: spender1});
         }
    },
     
     allowance: async function(owner, spender){
-        var row = app.model.Approval.findOne({
+        var row = app.model.Approve.findOne({
             condition:{
                 owner: owner,
                 spender: spender
@@ -196,11 +202,11 @@ module.exports = {
             },
             fields: ['amount']
         }
-         var bal = app.model.Approval.findOne(opt);
+         var bal = app.model.Approve.findOne(opt);
         // require(bal === 0, 'Zero allowance')
         // require(amount1 > bal, 'Amount is greater than allowance')
         
-        app.sdb.update("approval",{amount: Number(bal.amount) - amount1},{owner:this.trs.senderId ,spender: owner1});
+        app.sdb.update("approve",{amount: Number(bal.amount) - amount1},{owner:this.trs.senderId ,spender: owner1});
 
         // let option1 = {
         //     condition: {
