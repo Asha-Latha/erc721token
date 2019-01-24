@@ -60,14 +60,15 @@ module.exports = {
     transferFrom: async function(fromaddr, toaddr, x){ 
         var Currency='IXO';
 
-            console.log("From address: " + fromaddr + " To address: " + toaddr);
+           // console.log("From address: " + fromaddr + " To address: " + toaddr);
            
             var spender1 = await app.model.Approval.findOne({
                 condition:{
-                    owner: fromaddr,
+                    owner: fromaddr
                 },
                 fields: ['spender']
             });
+            console.log("spender address: " + spender1);
             var row =await app.model.Approval.findOne({
                 condition:{
                     owner: fromaddr,
@@ -75,7 +76,7 @@ module.exports = {
                 },
                 fields: ['amount']
             });
-            console.log("Got object: " + JSON.stringify(row));
+           // console.log("Got object: " + JSON.stringify(row));
 
             if(!row || x > Number(row.amount)){
                return "invalid approval";
