@@ -72,7 +72,7 @@ module.exports = {
             var row =await app.model.Approval.findOne({
                 condition:{
                     owner: fromaddr,
-                    spender: spender1
+                    spender: spender1.spender
                 },
                 fields: ['amount']
             });
@@ -106,7 +106,7 @@ module.exports = {
                         return "invalid receiver's address!";
                      }
               app.sdb.update("bal",{balance:Number(tobal.balance) - -x},{address: toaddr});    
-              app.sdb.update("approval",{amount: Number(row.amount)-x},{owner: fromaddr, spender: spender1});
+              app.sdb.update("approval",{amount: Number(row.amount)-x},{owner: fromaddr, spender: spender1.spender});
               app.sdb.create('tran' ,{fromaddress:fromaddr, toaddress:toaddr ,tokens:x});
         
             }
