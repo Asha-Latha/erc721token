@@ -68,7 +68,7 @@ module.exports = {
                 },
                 fields: ['spender']
             });
-            console.log("spender address: " + spender1);
+            console.log("spender address: " + JSON.stringify(spender1));
             var row =await app.model.Approval.findOne({
                 condition:{
                     owner: fromaddr,
