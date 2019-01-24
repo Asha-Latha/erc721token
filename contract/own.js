@@ -146,9 +146,9 @@ module.exports = {
                                                                         // with /transactions/unsigned type: 1000 
                                                                         // Will change it if that's not how it works.
     approve: async function(spender1, amount1){
-        var row = await app.model.Bal.findOne({Address: spender1});
-
-        require(row !== undefined, 'Spender address not found')
+        // var row = await app.model.Bal.findOne({Address: spender1});
+         
+        // require(row !== undefined, 'Spender address not found')
         
         var  row = await app.model.Approval.findOne({
             condition: {
