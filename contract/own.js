@@ -146,21 +146,17 @@ module.exports = {
                                                                         // with /transactions/unsigned type: 1000 
                                                                         // Will change it if that's not how it works.
     approve: async function(spender1, amount1){
-        function require(condition, error) {
-            if (!condition) throw Error(error)
-          }
         var row = await app.model.Bal.findOne({Address: spender1});
+
         require(row !== undefined, 'Spender address not found')
         
-        let option2 = {
+        var  row = await app.model.Approval.findOne({
             condition: {
               owner:spender1,
               spender:this.trs.senderId
              },
              fields: ['amount']
-           }
-        var  row = await app.model.Approval.findOne(option2);
-        require(row !== undefined, 'does not exist')
+           });
         if(!row){
             app.sdb.create("approval", { 
                 owner: spender1,
@@ -173,15 +169,14 @@ module.exports = {
    },
     
     allowance: async function(owner, spender){
-        let opt = {
-        condition:{
-            owner: owner,
-            spender: spender
-        },
-        fields: ['amount']
-    }
-        var row = app.model.Approval.findOne(opt);
-        return row.amount;
+        var row = app.model.Approval.findOne({
+            condition:{
+                owner: owner,
+                spender: spender
+            },
+            fields: ['amount']
+        });
+        return Number(row.amount);
     },
 
     spendAllowance: async function(owner1, amount1){
