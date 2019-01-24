@@ -61,17 +61,23 @@ module.exports = {
         var Currency='IXO';
 
             console.log("From address: " + fromaddr + " To address: " + toaddr);
-
+           
+            var spender1 = await app.model.Approval.findOne({
+                condition:{
+                    owner: fromaddr,
+                },
+                fields: ['spender']
+            });
             var row =await app.model.Approval.findOne({
                 condition:{
                     owner: fromaddr,
-                    spender: this.trs.senderId
+                    spender: spender1
                 },
                 fields: ['amount']
             });
             console.log("Got object: " + JSON.stringify(row));
 
-            if(!row){
+            if(!row || x > Number(row.amount)){
                return "invalid approval";
             }
             else{
@@ -99,7 +105,7 @@ module.exports = {
                         return "invalid receiver's address!";
                      }
               app.sdb.update("bal",{balance:Number(tobal.balance) - -x},{address: toaddr});    
-              app.sdb.update("approval",{amount: Number(row.amount)-x},{owner: fromaddr, spender: this.trs.senderId});
+              app.sdb.update("approval",{amount: Number(row.amount)-x},{owner: fromaddr, spender: spender1});
               app.sdb.create('tran' ,{fromaddress:fromaddr, toaddress:toaddr ,tokens:x});
         
             }
@@ -146,25 +152,22 @@ module.exports = {
                                                                         // with /transactions/unsigned type: 1000 
                                                                         // Will change it if that's not how it works.
     approve: async function(spender1, amount1){
-        // var row = await app.model.Bal.findOne({Address: spender1});
-         
-        // require(row !== undefined, 'Spender address not found')
         
         var  row = await app.model.Approval.findOne({
             condition: {
-              owner:spender1,
-              spender:this.trs.senderId
+              owner:this.trs.senderId,
+              spender:spender1
              },
              fields: ['amount']
            });
         if(!row){
             app.sdb.create("approval", { 
-                owner: spender1,
-                spender: this.trs.senderId,
+                owner: this.trs.senderId,
+                spender: spender1,
                 amount: amount1
             });
         }else{
-            app.sdb.update("approval",{amount: amount1},{owner: spender1, spender: this.trs.senderId});
+            app.sdb.update("approval",{amount: amount1},{owner: this.trs.senderId, spender: spender1});
         }
    },
     
