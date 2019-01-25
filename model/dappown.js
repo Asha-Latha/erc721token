@@ -1,5 +1,5 @@
 module.exports = {
-    name: 'dapps',
+    name: 'dappowns',
     fields: [
       {
         name: 'dappowner',

@@ -11,9 +11,9 @@ module.exports = {
     },
 
     setOwner:  function(){
-      var a=await app.model.Dapp.findOne({fields: ['dappowner']});
+      var a=await app.model.Dappown.findOne({fields: ['dappowner']});
         if(!a){
-            app.sdb.create('dapp' ,{dappowner:this.trs.senderId});
+            app.sdb.create('dappown' ,{dappowner:this.trs.senderId});
         }
         else{
             return "dapp already registered";
@@ -283,7 +283,7 @@ module.exports = {
     mint: async function(toaddr, amount){
         var Currency='IXO';
 
-        var row = await app.model.Dapp.findOne({fields:['dappowner']});
+        var row = await app.model.Dappown.findOne({fields:['dappowner']});
         if(row.dappowner != this.trs.senderId){
             return "Only the DApp owner can mint tokens";
         }
