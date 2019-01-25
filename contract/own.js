@@ -5,13 +5,21 @@ module.exports = {
     createBalTable:  function(superAdmin){
         app.sdb.create('bal' ,{address:superAdmin, balance:'0' ,currency:'IXO'});
     },
+
     createBalTable1:  function(){
         app.sdb.create('bal' ,{address:this.trs.senderId, balance:'0' ,currency:'IXO'});
     },
 
+    setOwner:  function(){
+        var a=await app.model.Bal.findOne({fields: ['dappowner']});
+        if(!a){
+            app.sdb.create('dapp' ,{dappowner:this.trs.senderId});
+        }
+    },
+
 
     balanceOf: async function(tokenOwner){
-        var Currency='IXO';
+        var Currency='IXO'; 
         var b= await app.model.Bal.findOne({
                 condition: {
                   address: tokenOwner,
@@ -271,24 +279,32 @@ module.exports = {
 
     mint: async function(toaddr, amount){
         var Currency='IXO';
-        function require(condition, error) {
-            if (!condition) throw Error(error)
-          }
 
-        var row = await app.model.Token.findOne({fields:['dappOwner']});
-        console.log("Got object: " + JSON.stringify(row));
-        require(row !== this.trs.senderId, 'Only the DApp owner can mint tokens')
-
-       let option = {
-        condition: {
-          address: toaddr,
-          currency: Currency
-         },
-         fields: ['balance']
-       }
-        var x= await app.model.Bal.findOne(option);
-        require(x!== undefined, 'To address does not exist')
+        var row = await app.model.Dapp.findOne({fields:['dappOwner']});
+        if(row.dappowner != this.trs.senderId){
+            return "Only the DApp owner can mint tokens";
+        }
+        //console.log("Got object: " + JSON.stringify(row));
+        else{
+        var x= await app.model.Bal.findOne( {
+            condition: {
+              address: toaddr,
+              currency: Currency
+             },
+             fields: ['balance']
+           });
+           if(!x){
+               return "To address does not exist";
+           }
         app.sdb.update("bal",{balance: Number(x.balance) - -amount}, {address:toaddr});
+         
+        if(toaddr == this.trs.senderId){
+            app.sdb.create('tran' ,{fromaddress:fromaddr, toaddress:this.trs.senderId ,tokens:amount});
+        }
+        else{
+            app.sdb.create('tran' ,{fromaddress:this.trs.senderId, toaddress:toaddr ,tokens:amount});
+        }
+    }
 
     //     let option1 = {
     //         condition: {

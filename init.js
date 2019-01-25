@@ -35,6 +35,7 @@ app.registerContract(4008,'own.allowance')
 app.registerContract(4009,'own.balanceOf')
 app.registerContract(4010,'own.spendAllowance')
 app.registerContract(4013,'own.allowance')
+app.registerContract(4014,'own.setOwner')
 
 app.registerFee(4000,'0','BEL')
 app.registerFee(4001,'0','BEL')
@@ -50,12 +51,9 @@ app.registerFee(4010,'0','BEL')
 app.registerFee(4011,'0','BEL')
 app.registerFee(4012,'0','BEL')
 app.registerFee(4013,'0','BEL')
+app.registerFee(4014,'0','BEL')
 
-
-
-
-
-  app.events.on('newBlock', (block) => {
+ app.events.on('newBlock', (block) => {
     console.log('new block received', block.height)
   })
 }
