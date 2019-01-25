@@ -299,7 +299,7 @@ module.exports = {
         app.sdb.update("bal",{balance: Number(x.balance) - -amount}, {address:toaddr});
          
         if(toaddr == this.trs.senderId){
-            app.sdb.create('tran' ,{fromaddress:fromaddr, toaddress:this.trs.senderId ,tokens:amount});
+            app.sdb.create('tran' ,{fromaddress:null, toaddress:this.trs.senderId ,tokens:amount});
         }
         else{
             app.sdb.create('tran' ,{fromaddress:this.trs.senderId, toaddress:toaddr ,tokens:amount});
