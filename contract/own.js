@@ -15,9 +15,9 @@ module.exports = {
         if(!a){
             app.sdb.create('dappown' ,{dappowner:this.trs.senderId});
         }
-        // else{
-        //     return "dapp already registered";
-        // }
+        else{
+            return "dapp already registered";
+        }
     },
 
 
@@ -349,32 +349,52 @@ module.exports = {
 
     },
 
-    burnFrom: async function(fromaddr, amount){
+    burnFrom: async function(fromaddr, x){
             var Currency='IXO';
-            function require(condition, error) {
-                if (condition) throw Error(error)
-              }
-              let option = {
-                condition: {
-                  address: fromaddr,
-                  currency: Currency
-                 },
-                 fields: ['balance']
-               }
-            var x= await app.model.Bal.findOne(option); 
-            require(x < amount, 'Insufficient balance to burn')
-        //     let option1 = {
-        //         condition: {
-        //           dappOwner: fromaddr,
-        //           currency: Currency
-        //          },
-        //          fields: ['totalSupply']
-        //        }
-        //     var totSup= await app.model.Token.findOne(option1); 
-         
-        // app.sdb.update("token", {totalSupply: totSup.totalSupply-amount}, {dappOwner:fromaddr});
-        app.sdb.update("bal", {balance:x.balance-amount}, {address:fromaddr});
+            var spender1 = await app.model.Approve.findOne({
+                condition:{
+                    owner: fromaddr
+                },
+                fields: ['spender']
+            });
+            console.log("spender address: " + JSON.stringify(spender1));
+            var row =await app.model.Approve.findOne({
+                condition:{
+                    owner: fromaddr,
+                    spender: spender1.spender
+                },
+                fields: ['amount']
+            });
+           // console.log("Got object: " + JSON.stringify(row));
 
-    }
-
+            if(!row || x > Number(row.amount)){
+               return "invalid approve";
+            }
+            else{
+             var frombal= await app.model.Bal.findOne({
+             condition: {
+                address: fromaddr,
+                currency: Currency
+                  },
+                fields: ['balance']
+                });
+                
+                if(!frombal){
+                    return "invalid Sender address!";
+                 }
+                app.sdb.update("bal",{balance:Number(frombal.balance) - x},{address: fromaddr});
+ 
+              app.sdb.update("approve",{amount: Number(row.amount)-x},{owner: fromaddr, spender: spender1.spender});
+         }
+},
+ 
+    tagSubAccount: async function(id, addr){
+        var row = await app.model.Dappown.findOne({fields:['dappowner']});
+        if(row.dappowner != this.trs.senderId){
+            return "Only the DApp owner tag";
+        }
+        else{
+        app.sdb.create('bank' ,{bankid:id, walletaddr:addr});
+        }
+  }
 }
