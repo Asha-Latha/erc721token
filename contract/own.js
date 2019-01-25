@@ -24,38 +24,6 @@ module.exports = {
            }
             return Number(b.balance);
     },
-    
-    // transferFrom: async function(fromaddr, toaddr, amount){
-    //     function require(condition, error) {
-    //         if (condition) throw Error(error)
-    //       }
-
-    //     var Currency = 'IXO';
-
-    //     let option = {
-    //     condition: {
-    //       address: fromaddr,
-    //       currency: Currency
-    //      },
-    //      fields: ['balance']
-    //    }
-    //     var frombal= await app.model.Bal.findOne(option);
-    //     require((frombal) == undefined, 'Sender address not found')
-    //     let option1 = {
-    //         condition: {
-    //           address: toaddr,
-    //           currency: Currency
-    //          },
-    //          fields: ['balance']
-    //        }
-    //     var tobal =  await app.model.Bal.findOne(option1);
-    //     require(tobal == undefined, 'Receiver address not found')
-    //     require((frombal) < amount, 'Insufficient balance in senders address')
-
-    //     app.sdb.update("bal",{balance:Number(frombal.balance) - amount},{address: fromaddr});
-    //     app.sdb.update("bal",{balance:Number(tobal.balance) - -amount},{address: toaddr});
-    //     //app.balances.transfer(Currency, amount, fromaddr, toaddr);
-    // },
 
     transferFrom: async function(fromaddr, toaddr, x){ 
         var Currency='IXO';
@@ -190,9 +158,9 @@ module.exports = {
     },
 
     spendAllowance: async function(owner1, amount1){
-        // function require(condition, error) {
-        //     if (condition) throw Error(error)
-        //   }
+        function require(condition, error) {
+            if (condition) throw Error(error)
+          }
           var Currency = 'IXO';
          
             let opt = {
@@ -203,34 +171,34 @@ module.exports = {
             fields: ['amount']
         }
          var bal = app.model.Approve.findOne(opt);
-        // require(bal === 0, 'Zero allowance')
-        // require(amount1 > bal, 'Amount is greater than allowance')
+        require(bal === 0, 'Zero allowance')
+        require(amount1 > bal, 'Amount is greater than allowance')
         
         app.sdb.update("approve",{amount: Number(bal.amount) - amount1},{owner:this.trs.senderId ,spender: owner1});
 
-        // let option1 = {
-        //     condition: {
-        //       address: owner1,
-        //       currency: Currency
-        //      },
-        //      fields: ['balance']
-        //    }
-        // var frombal =  await app.model.Bal.findOne(option1);
+        let option1 = {
+            condition: {
+              address: owner1,
+              currency: Currency
+             },
+             fields: ['balance']
+           }
+        var frombal =  await app.model.Bal.findOne(option1);
  
-        // app.sdb.update("bal",{balance: Number(frombal.balance) - amount1},{address: owner1});
+        app.sdb.update("bal",{balance: Number(frombal.balance) - amount1},{address: owner1});
 
-        // let option2 = {
-        //     condition: {
-        //       address: this.trs.senderId,
-        //       currency: Currency
-        //      },
-        //      fields: ['balance']
-        //    }
-        // var tobal =  await app.model.Bal.findOne(option2);
-        // app.sdb.update("bal",{balance: Number(tobal.balance) - -amount1},{address: this.trs.senderId});
+        let option2 = {
+            condition: {
+              address: this.trs.senderId,
+              currency: Currency
+             },
+             fields: ['balance']
+           }
+        var tobal =  await app.model.Bal.findOne(option2);
+        app.sdb.update("bal",{balance: Number(tobal.balance) - -amount1},{address: this.trs.senderId});
 
-        // var res=app.balances.transfer(Currency, amount, owner1,this.trs.senderID );
-        // return res;
+        var res=app.balances.transfer(Currency, amount, owner1,this.trs.senderID );
+        return res;
         
     },
 
