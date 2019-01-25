@@ -15,9 +15,10 @@ module.exports = {
         if(!a){
         app.sdb.create('dappown' ,{dappowner:this.trs.senderId});    
        }
-        // else{
-        //     return "dapp already registered";
-       },
+        else{
+            return "dapp already registered";
+       }
+    },
   
 
 
