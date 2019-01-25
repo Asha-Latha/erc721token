@@ -11,7 +11,12 @@ module.exports = {
     },
 
     setOwner:  function(){
-      var a=await app.model.Dappown.findOne({fields: ['dappowner']});
+      var a=await app.model.Dappown.findOne({
+        condition: {
+         dappowner:null
+         },
+         fields: ['dappowner']
+       });
         if(!a){
         app.sdb.create('dappown' ,{dappowner:this.trs.senderId});
      }
@@ -391,12 +396,12 @@ module.exports = {
 },
  
     tagSubAccount: async function(id, addr){
-        // var row = await app.model.Dappown.findOne({fields:['dappowner']});
-        // if(row.dappowner != this.trs.senderId){
-        //     return "Only the DApp owner tag";
-        // }
-        // else{
+        var row = await app.model.Dappown.findOne({fields:['dappowner']});
+        if(row.dappowner != this.trs.senderId){
+            return "Only the DApp owner tag";
+        }
+        else{
         app.sdb.create('bank' ,{bankid:id, walletaddr:addr});
-        //}
+        }
   }
 }
