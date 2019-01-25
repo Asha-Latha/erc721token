@@ -10,20 +10,15 @@ module.exports = {
         app.sdb.create('bal' ,{address:this.trs.senderId, balance:'0' ,currency:'IXO'});
     },
 
-    setOwner:  function(){
-      var a=await app.model.Dappown.findOne({
-        condition: {
-         dappowner:null
-         },
-         fields: ['dappowner']
-       });
+    setOwner: async function(){
+      var a=await app.model.Dappown.findOne({fields: ['dappowner']});
         if(!a){
-        app.sdb.create('dappown' ,{dappowner:this.trs.senderId});
-     }
+        app.sdb.create('dappown' ,{dappowner:this.trs.senderId});    
+       }
         // else{
         //     return "dapp already registered";
-        // }
-    },
+       },
+  
 
 
     balanceOf: async function(tokenOwner){
