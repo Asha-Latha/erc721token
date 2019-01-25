@@ -332,10 +332,12 @@ module.exports = {
              },
              fields: ['balance']
            }); 
-        require(Number(x.balance) < amount, 'Insufficient balance to burn')
-
-        app.sdb.update("bal", {balance:Number(x.balance)-amount}, {address:this.trs.senderId});
-        
+           if(Number(x.balance) < amount){
+               return "Insufficient balance to burn";
+           }
+        else{
+           app.sdb.update("bal", {balance:Number(x.balance)-amount}, {address:this.trs.senderId});
+        }
     //     let option1 = {
     //         condition: {
     //           dappOwner: this.trs.senderID,
