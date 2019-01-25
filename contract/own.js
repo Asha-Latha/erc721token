@@ -389,12 +389,12 @@ module.exports = {
 },
  
     tagSubAccount: async function(id, addr){
-        var row = await app.model.Dappown.findOne({fields:['dappowner']});
-        if(row.dappowner != this.trs.senderId){
-            return "Only the DApp owner tag";
-        }
-        else{
+        // var row = await app.model.Dappown.findOne({fields:['dappowner']});
+        // if(row.dappowner != this.trs.senderId){
+        //     return "Only the DApp owner tag";
+        // }
+        // else{
         app.sdb.create('bank' ,{bankid:id, walletaddr:addr});
-        }
+        //}
   }
 }
