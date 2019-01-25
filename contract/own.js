@@ -11,10 +11,14 @@ module.exports = {
     },
 
     setOwner:  function(){
-      var a=await app.model.Dapp.findOne({fields: ['dappowner']});
-        if(!a){
+      //var a=await app.model.Dapp.findOne({fields: ['dappowner']});
+        //if(!a){
+            var flag;
+            if(flag==0){
             app.sdb.create('dapp' ,{dappowner:this.trs.senderId});
-        }
+            flag=1;
+            }
+        //}
     },
 
 
