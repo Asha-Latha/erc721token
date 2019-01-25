@@ -280,7 +280,7 @@ module.exports = {
     mint: async function(toaddr, amount){
         var Currency='IXO';
 
-        var row = await app.model.Dapp.findOne({fields:['dappOwner']});
+        var row = await app.model.Dapp.findOne({fields:['dappowner']});
         if(row.dappowner != this.trs.senderId){
             return "Only the DApp owner can mint tokens";
         }
