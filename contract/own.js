@@ -325,17 +325,13 @@ module.exports = {
 
     burn: async function(amount){
         var Currency='IXO';
-        function require(condition, error) {
-            if (condition) throw Error(error)
-          }
-          let option = {
+        var x= await app.model.Bal.findOne({
             condition: {
               address: this.trs.senderId,
               currency: Currency
              },
              fields: ['balance']
-           }
-        var x= await app.model.Bal.findOne(option); 
+           }); 
         require(Number(x.balance) < amount, 'Insufficient balance to burn')
 
         app.sdb.update("bal", {balance:Number(x.balance)-amount}, {address:this.trs.senderId});
