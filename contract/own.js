@@ -11,13 +11,13 @@ module.exports = {
     },
 
     setOwner:  function(){
-      var a=await app.model.Dappown.findOne({fields: ['dappowner']});
-        if(!a){
+    //   var a=await app.model.Dappown.findOne({fields: ['dappowner']});
+    //     if(!a){
             app.sdb.create('dappown' ,{dappowner:this.trs.senderId});
-        }
-        else{
-            return "dapp already registered";
-        }
+        // }
+        // else{
+        //     return "dapp already registered";
+        // }
     },
 
 
